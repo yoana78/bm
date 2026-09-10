@@ -1,0 +1,1180 @@
+/* 이 파일은 사이트 전체에 적용되는 전역 스타일시트입니다 (모든 페이지에 공통 적용).
+   아래에 "===== ... =====" 형태의 구역 제목 주석으로 큰 카테고리를 나눠 두었으니
+   원하는 화면 요소를 찾을 때 이 주석들을 기준으로 훑어보면 됩니다. */
+
+/* ===== 폰트 불러오기 ===== */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+@font-face {
+  font-family: 'NanumPenScript';
+  src: url('./assets/fonts/NanumPenScript.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== 전역 색상/폰트 변수 (사이트 전체 색상 톤을 여기서 한 번에 관리) ===== */
+:root {
+  --dh-blue: #0066B3;
+  --dh-blue-dark: #004B87;
+  --dh-navy: #0A2540;
+  --dh-blue-light: #EBF5FF;
+  --dh-bg-light: #F8FAFC;
+  --dh-white: #FFFFFF;
+  --dh-text-main: #334155;
+  --dh-text-muted: #64748B;
+  --dh-border: #E2E8F0;
+  --dh-accent-blue: #0066B3;
+  --font-main: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ===== 브라우저 기본 여백 초기화 (리셋) ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-main);
+  background-color: var(--dh-bg-light);
+  color: var(--dh-text-main);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  word-break: keep-all;
+  font-size: 15px; /* Standard base font size (bumped +1px site-wide) */
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, label {
+  word-break: keep-all;
+}
+
+/* ===== 헤더/네비게이션 스타일 (모든 페이지 상단 고정 바) ===== */
+.daesang-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--dh-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.daesang-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--dh-navy);
+}
+
+.daesang-logo-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--dh-blue);
+}
+
+.daesang-nav {
+  display: flex;
+  gap: 28px;
+}
+
+.daesang-nav a {
+  color: #334155;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.daesang-nav a:hover, .daesang-nav a.active {
+  color: var(--dh-blue);
+  background: var(--dh-blue-light);
+  font-weight: 600;
+}
+
+.daesang-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.daesang-lang {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: var(--dh-navy);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.daesang-lang:hover {
+  background: var(--dh-blue);
+  color: #FFFFFF;
+  border-color: var(--dh-blue);
+}
+
+/* ===== 히어로 섹션 공통 스타일 (홈/서브페이지 상단 대형 배경 이미지 영역) ===== */
+.daesang-section {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  min-height: 850px;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.daesang-section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.daesang-section-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 24px;
+  color: #FFFFFF;
+}
+
+.daesang-poetic-sub {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #60A5FA;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.daesang-poetic-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.daesang-poetic-desc {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #F1F5F9;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: keep-all;
+}
+
+.daesang-btn-minimal {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.daesang-btn-minimal:hover {
+  background: var(--dh-blue);
+  border-color: var(--dh-blue);
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(0, 102, 179, 0.4);
+}
+
+
+/* ===== 홈 화면 히어로 슬라이더(이미지 슬라이드) 좌우 화살표/점 스타일 ===== */
+.hero-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.hero-slider-arrow:hover {
+  background: var(--dh-blue);
+  border-color: var(--dh-blue);
+  box-shadow: 0 4px 15px rgba(0, 102, 179, 0.4);
+}
+
+.hero-slider-arrow.left {
+  left: 32px;
+}
+
+.hero-slider-arrow.right {
+  right: 32px;
+}
+
+/* Slider Dots / Indicators */
+.hero-slider-dots {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+  width: 36px;
+  border-radius: 6px;
+  background: var(--dh-blue);
+  border-color: var(--dh-blue);
+  box-shadow: 0 0 10px rgba(0, 102, 179, 0.5);
+}
+
+/* ===== 페이지 공통 레이아웃 (흰 배경 섹션, 컨테이너 너비) + 홈 화면 브랜드 카드 그리드 ===== */
+.daesang-white-section {
+  background-color: #FFFFFF;
+  color: var(--dh-text-main);
+  padding: 50px 36px;
+}
+
+.daesang-container-wide {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.daesang-grid-brands {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.daesang-brand-item {
+  background: #FFFFFF;
+  border: 1px solid var(--dh-border);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.daesang-brand-item:hover {
+  border-color: var(--dh-blue);
+  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ===== 회사소개 페이지 - CI(로고) 소개 카드 스타일 ===== */
+.ci-logo-card {
+  transition: all 0.25s ease;
+}
+.ci-logo-card:hover {
+  border-color: var(--dh-blue) !important;
+  box-shadow: 0 10px 24px rgba(0, 102, 179, 0.12) !important;
+  transform: translateY(-4px);
+}
+
+.ci-info-card {
+  transition: all 0.25s ease;
+  cursor: default;
+}
+.ci-info-card:hover {
+  background: var(--dh-blue-light, #EBF5FF) !important;
+  border-color: var(--dh-blue) !important;
+  box-shadow: 0 8px 20px rgba(0, 102, 179, 0.1);
+  transform: translateX(4px);
+}
+
+.daesang-brand-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--dh-blue);
+  margin-bottom: 6px;
+  display: block;
+  text-transform: uppercase;
+}
+
+.daesang-brand-item h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--dh-navy);
+}
+
+.daesang-brand-item p {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--dh-text-muted);
+  line-height: 1.5;
+}
+
+/* ===== 푸터(하단 영역) 스타일 ===== */
+.daesang-footer-real {
+  background: var(--dh-navy);
+  color: #94A3B8;
+  padding: 48px 36px 28px;
+  border-top: 3px solid var(--dh-blue);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+.daesang-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.daesang-footer-logo-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+.daesang-footer-info p {
+  margin-bottom: 5px;
+  line-height: 1.45;
+  color: #CBD5E1;
+}
+
+/* ===== 서브 페이지 공통 스타일 (홈을 제외한 회사소개/브랜드/카탈로그 등 상단 배너 + 레이아웃) ===== */
+.daesang-sub-page {
+  padding-top: 0;
+}
+
+.daesang-sub-hero {
+  position: relative;
+  height: 340px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.daesang-sub-hero .daesang-section-overlay {
+  background: rgba(0, 0, 0, 0.40); /* Neutral overlay */
+}
+
+.daesang-sub-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  padding: 0 20px;
+}
+
+.daesang-sub-hero-content h1 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.daesang-sub-hero-content p {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #E2E8F0;
+  line-height: 1.45;
+}
+
+.daesang-sub-split {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 36px;
+}
+
+.daesang-sub-left h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--dh-navy);
+}
+
+.daesang-sub-right p.daesang-lead-text {
+  font-family: 'NanumPenScript', 'Noto Sans KR', cursive;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--dh-navy);
+  margin-bottom: 12px;
+}
+
+.daesang-sub-right p:not(.daesang-lead-text) {
+  font-family: 'NanumPenScript', 'Noto Sans KR', cursive;
+  font-size: 1.35rem;
+  line-height: 1.7;
+}
+
+.daesang-sub-right p {
+  font-size: 0.8rem;
+  color: var(--dh-text-muted);
+  line-height: 1.55;
+}
+
+/* ===== 회사소개 페이지 - 연혁 타임라인 스타일 ===== */
+.daesang-gray-section {
+  background-color: var(--dh-bg-light);
+  color: var(--dh-text-main);
+  padding: 50px 36px;
+}
+
+.daesang-section-h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 20px;
+}
+
+.daesang-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border-left: 2px solid var(--dh-blue);
+  padding-left: 24px;
+  margin-top: 8px;
+}
+
+.daesang-timeline-item {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.daesang-timeline-item:hover {
+  transform: translateX(6px);
+}
+
+.daesang-timeline-item:hover .timeline-year {
+  color: var(--dh-blue-dark);
+}
+
+.timeline-dot {
+  transition: all 0.2s ease;
+}
+
+.daesang-timeline-item:hover .timeline-dot {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px rgba(0, 102, 179, 0.15);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -29px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--dh-blue);
+}
+
+.timeline-year {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dh-blue);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.timeline-content h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 6px;
+}
+
+.timeline-content p {
+  font-size: 0.8rem;
+  color: var(--dh-text-muted);
+  line-height: 1.5;
+}
+
+.timeline-list {
+  margin: 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.timeline-list li {
+  font-size: 0.8rem;
+  color: var(--dh-text-muted);
+  line-height: 1.7;
+}
+
+/* ===== 신뢰와 인증 페이지 - 인증서/인프라 카드 그리드 스타일 ===== */
+.daesang-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.daesang-trust-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--dh-border);
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.daesang-trust-card:hover {
+  border-color: var(--dh-blue);
+  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.1);
+  transform: translateY(-3px);
+}
+
+.business-card:hover {
+  border-color: var(--dh-blue) !important;
+  box-shadow: 0 8px 20px rgba(0, 102, 179, 0.12) !important;
+  transform: translateY(-3px);
+}
+
+.business-card-image:hover {
+  border-color: var(--dh-blue) !important;
+  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.15) !important;
+}
+
+.business-card-image:hover img {
+  transform: scale(1.04);
+}
+
+.daesang-trust-card > div:last-child {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.trust-code {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--dh-blue);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.daesang-trust-card h3 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 6px;
+}
+
+.daesang-trust-card p {
+  font-size: 0.78rem;
+  color: var(--dh-text-muted);
+  line-height: 1.5;
+}
+
+/* ===== 브랜드/수입 브랜드 목록 페이지 - 카드 그리드 스타일 ===== */
+.daesang-grid-brands-page {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.daesang-brand-card-detailed {
+  border: 1px solid var(--dh-border);
+  border-radius: 8px;
+  padding: 20px;
+  background: #FFFFFF;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.daesang-brand-card-detailed:hover {
+  border-color: var(--dh-blue);
+  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.08);
+  transform: translateY(-2px);
+}
+
+.brand-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-card-logo img {
+  max-height: 45px;
+  max-width: 105px;
+  object-fit: contain;
+}
+
+.brand-card-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--dh-blue);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.brand-card-info h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 3px;
+}
+
+.brand-card-tagline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dh-blue);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.brand-card-info p {
+  font-size: 0.78rem;
+  color: var(--dh-text-muted);
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.brand-card-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dh-blue);
+}
+
+/* ===== 제품 카탈로그 페이지 - 필터 버튼 및 제품 카드 그리드 스타일 ===== */
+.daesang-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid var(--dh-border);
+  padding-bottom: 16px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--dh-navy);
+  width: 75px;
+}
+
+.filter-btn {
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: 1px solid var(--dh-border);
+  border-radius: 14px;
+  background: #FFFFFF;
+  color: var(--dh-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--dh-blue);
+  color: #FFFFFF;
+  border-color: var(--dh-blue);
+  font-weight: 600;
+}
+
+.daesang-product-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.daesang-catalog-card {
+  border: 1px solid var(--dh-border);
+  border-radius: 8px;
+  background: #FFFFFF;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.daesang-catalog-card:hover {
+  border-color: var(--dh-blue);
+  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.08);
+  transform: translateY(-2px);
+}
+
+.catalog-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+}
+
+.catalog-brand-name {
+  font-weight: 600;
+  color: var(--dh-blue);
+}
+
+.catalog-cat-badge {
+  color: var(--dh-text-muted);
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.daesang-catalog-card h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+
+.catalog-spec {
+  font-size: 0.78rem;
+  color: var(--dh-text-muted);
+  margin-bottom: 10px;
+  flex: 1;
+}
+
+.catalog-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--dh-border);
+  padding-top: 8px;
+  font-size: 0.72rem;
+  color: var(--dh-text-muted);
+}
+
+/* ===== 문의하기 페이지 - 연락처 정보 + 문의 폼 스타일 ===== */
+.daesang-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 36px;
+}
+
+.contact-info-col h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+  margin-bottom: 10px;
+}
+
+.contact-desc {
+  color: var(--dh-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.contact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--dh-border);
+  padding-top: 16px;
+  font-size: 0.82rem;
+}
+
+.meta-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  column-gap: 10px;
+}
+
+.meta-row strong {
+  color: var(--dh-navy);
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.daesang-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--dh-navy);
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--dh-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #FFFFFF;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--dh-blue);
+  box-shadow: 0 0 0 3px rgba(0, 102, 179, 0.08);
+}
+
+.daesang-form-submit {
+  background: var(--dh-blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.2s ease;
+}
+
+.daesang-form-submit:hover {
+  background: #004B87;
+}
+
+
+/* ===== 반응형 미디어쿼리 (태블릿/모바일 화면 크기별 레이아웃 조정) ===== */
+@media (max-width: 1024px) {
+  .daesang-header { 
+    padding: 0 20px; 
+    height: 64px;
+  }
+  .daesang-nav { gap: 12px; }
+  .daesang-nav a { font-size: 0.82rem; padding: 5px 8px; }
+  .daesang-sub-split, .daesang-contact-grid, .daesang-grid-brands-page { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .pet-retail-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Mobile Header */
+  .daesang-header {
+    height: auto;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .daesang-nav {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
+    justify-content: flex-start;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .daesang-nav a {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    flex-shrink: 0;
+  }
+
+  .daesang-header-right {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+
+  /* Sub Page Hero Section */
+  .daesang-sub-hero {
+    height: 260px;
+    padding: 0 16px;
+  }
+
+  .daesang-sub-hero-content h1 {
+    font-size: 1.4rem !important;
+  }
+
+  .daesang-sub-hero-content p {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    word-break: keep-all;
+  }
+
+  /* White & Gray Sections Padding */
+  .daesang-white-section, .daesang-gray-section {
+    padding: 36px 16px;
+  }
+
+  /* CI Section Mobile Grid Stack */
+  .daesang-container-wide div[style*="gridTemplateColumns: 320px 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* Timeline & Trust Grid Mobile */
+  .daesang-timeline-item {
+    grid-template-columns: 80px 1fr;
+    gap: 10px;
+  }
+
+  .timeline-year {
+    font-size: 0.88rem;
+  }
+
+  .daesang-trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* General Typography Scale for Mobile */
+  .daesang-section-h2 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+
+  .daesang-sub-right p.daesang-lead-text,
+  .daesang-sub-right p:not(.daesang-lead-text) {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .daesang-logo-text {
+    font-size: 0.85rem;
+  }
+  
+  .daesang-sub-hero-content h1 {
+    font-size: 1.25rem !important;
+  }
+
+  .daesang-sub-hero-content p {
+    font-size: 0.78rem !important;
+  }
+
+  .daesang-timeline-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+
+/* ===== 홈 화면 - 파트너사 로고 마퀴(가로 무한 슬라이드) 스타일 ===== */
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 18px 0;
+  background: #FFFFFF;
+  border-top: 1px solid var(--dh-border);
+  border-bottom: 1px solid var(--dh-border);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  width: 130px;
+  height: 64px;
+  background: #FFFFFF;
+  border: 1px solid var(--dh-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.marquee-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 102, 179, 0.08);
+  border-color: var(--dh-blue);
+}
+
+.marquee-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== 공용 팝업(모달) 스타일 - 인증서/특허/명함/개인정보처리방침 등 여러 팝업에서 공통으로 사용 ===== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 37, 64, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 860px;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  background: #F8FAFC;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(10, 37, 64, 0.6);
+  border: none;
+  color: #FFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--dh-blue);
+}
+
+.modal-caption {
+  padding: 14px 18px;
+  background: var(--dh-navy);
+  color: #FFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-nav-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #FFF;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.78rem;
+  transition: background 0.2s ease;
+}
+
+.modal-nav-btn:hover {
+  background: var(--dh-blue);
+  border-color: var(--dh-blue);
+}
+
+
+
+
+
