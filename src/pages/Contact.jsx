@@ -1,17 +1,17 @@
 // 이 파일은 "문의하기" 페이지입니다 (주소: /contact).
 // 영업 담당자 명함, 회사 연락처 정보, 문의 입력 폼을 보여줍니다.
-// 이 사이트는 서버가 없는 정적 사이트라서 폼을 자동으로 전송해주는 백엔드가 없습니다.
-// 대신 "문의 접수하기"를 누르면 사용자의 기본 메일 앱(mailto:)이 문의 내용으로 미리 채워진 채로 열리고,
-// 그 메일 앱에서 최종적으로 "보내기"를 눌러야 실제로 이메일이 전송됩니다. 수신 주소는 관리자 페이지에서 설정.
+// 이 사이트는 서버가 없는 정적 사이트라서, 문의 폼은 Web3Forms(무료 폼-이메일 중계 서비스)를 통해
+// 방문자가 버튼만 누르면 자동으로 이메일이 전송되도록 구현되어 있습니다 (메일 앱을 열 필요 없음).
+// 수신 이메일은 Web3Forms 계정에 등록된 주소로 가며, https://web3forms.com 에서 바꿀 수 있습니다.
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { useData } from '../context/DataContext';
 import { brands } from '../data/brands';
+
+const WEB3FORMS_ACCESS_KEY = '8207939c-fd68-4c59-ae20-62ea022b6952';
 
 export default function Contact() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
-  const { siteSettings } = useData();
 
   // 문의 폼 입력값 상태
   const [formData, setFormData] = useState({
@@ -24,6 +24,7 @@ export default function Contact() {
     brand: brands[0]?.id || '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const [activeCardModal, setActiveCardModal] = useState(null); // 확대해서 보고 있는 명함 이미지 (없으면 null)
 
@@ -32,9 +33,8 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 폼 제출 시 실행 - 서버가 없으므로 mailto: 링크로 사용자의 메일 앱을 열어 문의 내용을 자동으로 채워줌.
-  // 관리자 페이지 "사이트 설정"에서 지정한 주소(siteSettings.contactEmail)로 수신자가 채워짐.
-  const handleSubmit = (e) => {
+  // 폼 제출 시 실행 - Web3Forms API로 문의 내용을 전송해 방문자가 메일 앱을 열지 않고도 바로 접수되게 함
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const typeLabel = formData.category === 'export'
       ? (isEn ? 'Global Export' : '해외수출')
@@ -45,26 +45,39 @@ export default function Contact() {
     const selectedBrand = brands.find(b => b.id === formData.brand);
     const brandLabel = selectedBrand ? (isEn ? (selectedBrand.nameEn || selectedBrand.nameKo) : selectedBrand.nameKo) : '-';
 
-    const subject = `[BOOMYUNG 문의 - ${typeLabel}] ${formData.company || '(회사명 미입력)'}`;
-    const body = [
-      `문의 유형: ${typeLabel}`,
-      `회사명: ${formData.company}`,
-      `담당자: ${formData.name}`,
-      `이메일: ${formData.email}`,
-      `연락처: ${formData.phone}`,
-      `국가/지역: ${formData.country}`,
-      `관심 브랜드: ${brandLabel}`,
-      '',
-      '상세 문의 내용:',
-      formData.message
-    ].join('\n');
+    setSubmitting(true);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `[BOOMYUNG 문의 - ${typeLabel}] ${formData.company || '(회사명 미입력)'}`,
+          from_name: formData.company || formData.name,
+          '문의 유형': typeLabel,
+          '회사명': formData.company,
+          '담당자': formData.name,
+          email: formData.email,
+          '연락처': formData.phone,
+          '국가/지역': formData.country,
+          '관심 브랜드': brandLabel,
+          '상세 문의 내용': formData.message
+        })
+      });
+      const result = await res.json();
+      if (!result.success) throw new Error(result.message || 'submit failed');
 
-    const mailtoUrl = `mailto:${siteSettings.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoUrl;
-
-    alert(isEn
-      ? `Your email app will open with this inquiry pre-filled — please press Send there to complete it.`
-      : `메일 작성 화면이 열립니다. 내용을 확인하신 뒤 메일 앱에서 "보내기"를 눌러주셔야 문의가 실제로 접수됩니다.`);
+      alert(isEn
+        ? '[' + typeLabel + '] Thank you. Our B2B sales team will contact you shortly.'
+        : `[${typeLabel}] 문의가 접수되었습니다. 담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.`);
+      setFormData({ company: '', name: '', email: '', phone: '', country: '', category: 'export', brand: brands[0]?.id || '', message: '' });
+    } catch (err) {
+      alert(isEn
+        ? 'Failed to send your inquiry. Please try again or contact us directly by phone/email.'
+        : '문의 전송에 실패했습니다. 잠시 후 다시 시도하시거나 전화/이메일로 직접 문의해 주세요.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // 영업 담당자 명함 카드 데이터 (팀1/팀2)
@@ -272,8 +285,8 @@ export default function Contact() {
                   <textarea name="message" rows="5" required value={formData.message} onChange={handleChange} placeholder={isEn ? "Please describe your business inquiry..." : "희망 품목, 희망 수량, 예상 공급 시기 등을 자유롭게 적어주세요."}></textarea>
                 </div>
 
-                <button type="submit" className="daesang-form-submit">
-                  {isEn ? 'SUBMIT INQUIRY' : '문의 접수하기'} →
+                <button type="submit" className="daesang-form-submit" disabled={submitting} style={submitting ? { opacity: 0.6, cursor: 'not-allowed' } : undefined}>
+                  {submitting ? (isEn ? 'Sending...' : '전송 중...') : (isEn ? 'SUBMIT INQUIRY' : '문의 접수하기')} →
                 </button>
               </form>
             </div>
