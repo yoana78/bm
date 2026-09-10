@@ -1,5 +1,16 @@
 import { requireAdmin } from '../../_auth.js';
 
+// TEMP DEBUG — remove after diagnosing id mismatch
+export async function onRequestGet(context) {
+  const { env, params } = context;
+  const existing = await env.DB.prepare('SELECT id FROM products WHERE id = ?').bind(params.id).first();
+  return Response.json({
+    paramsId: params.id,
+    paramsIdCodes: Array.from(params.id).map(c => c.codePointAt(0)),
+    found: !!existing
+  });
+}
+
 // PUT /api/products/:id — 기존 제품 수정 (부분 업데이트, 관리자 전용)
 export async function onRequestPut(context) {
   const unauthorized = requireAdmin(context);
