@@ -20,7 +20,14 @@ export async function onRequestPut(context) {
   const updates = await context.request.json();
 
   const existing = await env.DB.prepare('SELECT data FROM products WHERE id = ?').bind(params.id).first();
-  if (!existing) return Response.json({ error: 'Not found' }, { status: 404 });
+  if (!existing) {
+    return Response.json({
+      error: 'Not found',
+      debugParamsId: params.id,
+      debugParamsIdCodes: Array.from(params.id).map(c => c.codePointAt(0)),
+      debugParamsIdLen: params.id.length
+    }, { status: 404 });
+  }
 
   const merged = { ...JSON.parse(existing.data), ...updates };
   await env.DB.prepare('UPDATE products SET data = ?, updated_at = datetime(\'now\') WHERE id = ?')
