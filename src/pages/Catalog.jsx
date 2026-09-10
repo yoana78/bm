@@ -107,7 +107,7 @@ export default function Catalog() {
               const b = brands.find(brand => brand.id === p.brandId);
               return (
                 <Link to={`/catalog/${p.id}`} key={p.id} className="daesang-catalog-card">
-                  <div style={{ height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FAFAFA', borderRadius: '8px', padding: '12px', marginBottom: '16px' }}>
+                  <div className="catalog-card-image" style={{ height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FAFAFA', borderRadius: '8px', padding: '12px', marginBottom: '16px' }}>
                     <img 
                       src={p.image} 
                       alt={p.nameKo} 

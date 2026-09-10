@@ -268,7 +268,7 @@ export default function About() {
             {isEn ? 'Corporate Identity' : 'CI 소개'}
           </h2>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '32px', alignItems: 'stretch' }}>
+          <div className="ci-section-grid" style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '32px', alignItems: 'stretch' }}>
             {/* 좌측: 대형 CI 로고 박스 */}
             <div className="ci-logo-card" style={{
               background: '#FFFFFF',
@@ -305,7 +305,7 @@ export default function About() {
                 borderRadius: '8px',
                 padding: '20px 24px'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div className="ci-info-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--dh-blue)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>01. Symbol Mark</span>
                   <h4 style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--dh-navy)' }}>
                     {isEn ? 'Symbolization of Trust & Life' : '심볼마크의 상징성'}
@@ -326,7 +326,7 @@ export default function About() {
                 borderRadius: '8px',
                 padding: '20px 24px'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div className="ci-info-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--dh-blue)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>02. Core Value</span>
                   <h4 style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--dh-navy)' }}>
                     {isEn ? '30 Years of Honest Technology' : '30년 정직한 기술과 혁신'}
@@ -347,7 +347,7 @@ export default function About() {
                 borderRadius: '8px',
                 padding: '20px 24px'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div className="ci-info-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--dh-blue)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>03. Color System</span>
                   <h4 style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--dh-navy)' }}>
                     {isEn ? 'Corporate Blue Color (#0066B3)' : '시그니처 블루 컬러 (#0066B3)'}
