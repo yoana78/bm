@@ -265,7 +265,7 @@ export default function Trust() {
               : '(주)부명은 반려동물 사료 및 용품 관련 기술에 대해 특허청(KIPO)에 등록된 특허, 디자인등록, 실용신안을 보유하고 있습니다.'}
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}>
+          <div className="patents-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}>
             {patents.map(p => (
               <div
                 key={p.no}
