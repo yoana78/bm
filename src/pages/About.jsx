@@ -18,6 +18,11 @@ const homadImages = [
   './assets/homad/homad_04.jpg'
 ];
 
+// 인프라 섹션의 "칭다오 공장" 카드를 클릭하면 뜨는 갤러리 이미지들
+const qingdaoImages = [
+  './assets/china/qingdao-factory.jpg'
+];
+
 export default function About() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
@@ -95,6 +100,12 @@ export default function About() {
 
   return (
     <div className="daesang-sub-page">
+      {/* 물류센터 팝업 영상을 미리 백그라운드에서 받아두어, 실제 팝업을 열 때
+          전체 용량을 그때부터 새로 받기 시작하느라 느려 보이지 않도록 함
+          (link rel=preload는 브라우저별로 video 프리로드를 지원하지 않는 경우가 있어
+          숨겨진 video 태그로 확실하게 미리 받아둠) */}
+      <video src="./assets/logistics/logistics.mp4" preload="auto" muted style={{ display: 'none' }} />
+
       {/* 1. 메인 서브 히어로 이미지 */}
       <section
         className="daesang-sub-hero"
@@ -248,7 +259,7 @@ export default function About() {
               </div>
             </div>
 
-            <div className="daesang-trust-card">
+            <div className="daesang-trust-card" onClick={() => { setGalleryImages(qingdaoImages); setGalleryIndex(0); }} style={{ cursor: 'pointer' }}>
               <span className="trust-code">GLOBAL NETWORK</span>
               <h3>{isEn ? 'Qingdao Plant' : '칭다오 공장'}</h3>
               <p>
