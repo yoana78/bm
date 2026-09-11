@@ -216,18 +216,21 @@ export default function ProductDetail() {
                       <table className="nutrition-table">
                         <tbody>
                           {Object.entries(product.nutrition).map(([key, value]) => {
-                            const keyEnMap = {
-                              '조단백': 'Crude Protein',
-                              '조지방': 'Crude Fat',
-                              '칼슘': 'Calcium',
-                              '인': 'Phosphorus',
-                              '조섬유': 'Crude Fiber',
-                              '조회분': 'Crude Ash',
-                              '수분': 'Moisture'
+                            // 실제 데이터는 영문 키(protein/fat/fiber/...)로 저장되어 있으므로,
+                            // 그 영문 키를 기준으로 한글/영문 표시 라벨을 매핑한다.
+                            const labelMap = {
+                              protein: { ko: '조단백', en: 'Crude Protein' },
+                              fat: { ko: '조지방', en: 'Crude Fat' },
+                              fiber: { ko: '조섬유', en: 'Crude Fiber' },
+                              moisture: { ko: '수분', en: 'Moisture' },
+                              ash: { ko: '조회분', en: 'Crude Ash' },
+                              calcium: { ko: '칼슘', en: 'Calcium' },
+                              phosphorus: { ko: '인', en: 'Phosphorus' }
                             };
+                            const label = labelMap[key];
                             return (
                               <tr key={key}>
-                                <th>{isEn ? (keyEnMap[key] || key) : key}</th>
+                                <th>{label ? (isEn ? label.en : label.ko) : key}</th>
                                 <td>{value}</td>
                               </tr>
                             );

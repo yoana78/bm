@@ -18,9 +18,12 @@ function compressImage(file, { maxDimension = 1600, startQuality = 0.85, maxBase
     img.onload = () => {
       URL.revokeObjectURL(objectUrl);
       let { width, height } = img;
-      if (width > maxDimension || height > maxDimension) {
-        const scale = maxDimension / Math.max(width, height);
-        width = Math.round(width * scale);
+      // "긴 쪽" 기준이 아니라 가로 폭 기준으로만 1차 축소한다 — 세로로 아주 긴 상세페이지
+      // 인포그래픽(예: 800x6563)을 긴 쪽(세로) 기준으로 줄이면 가로 폭이 200px 밑으로 떨어져
+      // 글자를 알아볼 수 없게 된다.
+      if (width > maxDimension) {
+        const scale = maxDimension / width;
+        width = maxDimension;
         height = Math.round(height * scale);
       }
       const canvas = document.createElement('canvas');
@@ -34,14 +37,16 @@ function compressImage(file, { maxDimension = 1600, startQuality = 0.85, maxBase
       let quality = startQuality;
       let dataUrl = canvas.toDataURL(keepPng ? 'image/png' : 'image/jpeg', quality);
 
-      // 여전히 너무 크면 품질을 계속 낮춰가며 다시 인코딩 (PNG는 품질 옵션이 없어 캔버스 크기를 더 줄임)
-      while (dataUrl.length > maxBase64Length && quality > 0.3) {
-        quality -= 0.1;
-        if (keepPng) {
+      // 여전히 너무 크면 품질을 낮추고, 품질을 최대로 낮췄는데도(또는 PNG라 품질 옵션이 없어서)
+      // 여전히 크면 캔버스 크기 자체를 반복해서 줄인다 (가로로 긴 세로 인포그래픽처럼
+      // 픽셀 수 자체가 많아 품질만으로는 용량이 안 줄어드는 경우 대비).
+      while (dataUrl.length > maxBase64Length && (quality > 0.3 || canvas.width > 300)) {
+        if (quality > 0.3) quality -= 0.1;
+        if (keepPng || quality <= 0.3) {
           canvas.width = Math.round(canvas.width * 0.85);
           canvas.height = Math.round(canvas.height * 0.85);
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          dataUrl = canvas.toDataURL('image/png');
+          dataUrl = canvas.toDataURL(keepPng ? 'image/png' : 'image/jpeg', keepPng ? undefined : quality);
         } else {
           dataUrl = canvas.toDataURL('image/jpeg', quality);
         }
@@ -77,6 +82,10 @@ export default function Admin() {
     origin: '',
     features: '',
     ingredients: '',
+    protein: '',
+    fat: '',
+    fiber: '',
+    moisture: '',
     image: '',
     purchaseUrl: '',
     infoImages: []
@@ -132,6 +141,10 @@ export default function Admin() {
     origin: '대한민국',
     features: '',
     ingredients: '',
+    protein: '',
+    fat: '',
+    fiber: '',
+    moisture: '',
     image: '',
     purchaseUrl: '',
     infoImages: []
@@ -352,6 +365,10 @@ export default function Admin() {
       origin: product.origin || '',
       features: rawFeatures,
       ingredients: product.ingredients || '',
+      protein: product.nutrition?.protein || '',
+      fat: product.nutrition?.fat || '',
+      fiber: product.nutrition?.fiber || '',
+      moisture: product.nutrition?.moisture || '',
       image: product.image || '',
       purchaseUrl: product.purchaseUrl || '',
       infoImages: Array.isArray(product.infoImages) ? product.infoImages : []
@@ -423,6 +440,12 @@ export default function Admin() {
         featuresEn: translated.featuresEn,
         ingredients: editForm.ingredients,
         ingredientsEn: translated.ingredientsEn,
+        nutrition: {
+          protein: editForm.protein,
+          fat: editForm.fat,
+          fiber: editForm.fiber,
+          moisture: editForm.moisture
+        },
         image: editForm.image,
         purchaseUrl: editForm.purchaseUrl.trim(),
         infoImages: editForm.infoImages
@@ -535,6 +558,12 @@ export default function Admin() {
       originEn: translated.originEn,
       category: productForm.category,
       petType: productForm.petType,
+      nutrition: {
+        protein: productForm.protein,
+        fat: productForm.fat,
+        fiber: productForm.fiber,
+        moisture: productForm.moisture
+      },
       image: productForm.image || '',
       purchaseUrl: productForm.purchaseUrl.trim(),
       infoImages: productForm.infoImages
@@ -555,6 +584,10 @@ export default function Admin() {
         origin: '대한민국',
         features: '',
         ingredients: '',
+        protein: '',
+        fat: '',
+        fiber: '',
+        moisture: '',
         image: '',
         purchaseUrl: '',
         infoImages: []
@@ -1226,6 +1259,18 @@ export default function Admin() {
                 />
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                  {isEn ? 'Guaranteed Analysis (Protein / Fat / Fiber / Moisture)' : '등록 성분량 (조단백 / 조지방 / 조섬유 / 수분)'}
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                  <input type="text" placeholder="예: 24.0% (Min)" value={productForm.protein} onChange={e => setProductForm({ ...productForm, protein: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                  <input type="text" placeholder="예: 10.0% (Min)" value={productForm.fat} onChange={e => setProductForm({ ...productForm, fat: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                  <input type="text" placeholder="예: 5.0% (Max)" value={productForm.fiber} onChange={e => setProductForm({ ...productForm, fiber: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                  <input type="text" placeholder="예: 12.0% (Max)" value={productForm.moisture} onChange={e => setProductForm({ ...productForm, moisture: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                </div>
+              </div>
+
               <button
                 type="submit"
                 style={{
@@ -1717,6 +1762,18 @@ export default function Admin() {
                 onChange={e => setEditForm({ ...editForm, ingredients: e.target.value })}
                 style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.95rem' }}
               />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                {isEn ? 'Guaranteed Analysis (Protein / Fat / Fiber / Moisture)' : '등록 성분량 (조단백 / 조지방 / 조섬유 / 수분)'}
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                <input type="text" placeholder="예: 24.0% (Min)" value={editForm.protein} onChange={e => setEditForm({ ...editForm, protein: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                <input type="text" placeholder="예: 10.0% (Min)" value={editForm.fat} onChange={e => setEditForm({ ...editForm, fat: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                <input type="text" placeholder="예: 5.0% (Max)" value={editForm.fiber} onChange={e => setEditForm({ ...editForm, fiber: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+                <input type="text" placeholder="예: 12.0% (Max)" value={editForm.moisture} onChange={e => setEditForm({ ...editForm, moisture: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
+              </div>
             </div>
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '8px' }}>
