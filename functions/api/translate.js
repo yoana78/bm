@@ -13,20 +13,17 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const attempts = [
-      { source_lang: 'korean', target_lang: 'english' },
-      { source_lang: 'ko', target_lang: 'en' }
-    ];
-    const results = [];
-    for (const params of attempts) {
-      try {
-        const r = await env.AI.run('@cf/meta/m2m100-1.2b', { text: text.trim(), ...params });
-        results.push({ params, r });
-      } catch (e) {
-        results.push({ params, error: String(e) });
-      }
-    }
-    return Response.json({ translated: '', _debug: results });
+    const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+      messages: [
+        {
+          role: 'system',
+          content: 'You translate Korean pet-industry marketing copy into natural, concise English. Reply with ONLY the English translation — no quotes, no explanation, no preamble.'
+        },
+        { role: 'user', content: text.trim() }
+      ],
+      max_tokens: 300
+    });
+    return Response.json({ translated: (result.response || '').trim() });
   } catch (err) {
     return Response.json({ error: '번역 실패', detail: String(err) }, { status: 500 });
   }
