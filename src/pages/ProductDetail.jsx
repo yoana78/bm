@@ -20,10 +20,16 @@ const petTypeEnMap = {
   'cat': 'Cat'
 };
 
+// 데이터에는 dog/cat으로 저장되므로 한국어 모드에서도 라벨을 바꿔줘야 한다
+const petTypeKoMap = {
+  'dog': '강아지',
+  'cat': '고양이'
+};
+
 export default function ProductDetail() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { t, lang } = useLanguage();
+  const { lang } = useLanguage();
   const { brands, products } = useData();
   const [activeTab, setActiveTab] = useState('info'); // 현재 선택된 탭 ('info' 또는 'nutrition')
 
@@ -51,6 +57,10 @@ export default function ProductDetail() {
   const shelfLifeText = isEn ? (product.shelfLifeEn || '18 months from manufacturing date') : product.shelfLife;
   const originText = isEn ? (product.originEn || 'Republic of Korea') : product.origin;
   const ingredientsText = isEn ? (product.ingredientsEn || product.ingredients) : product.ingredients;
+
+  // 값이 비어있는 항목은 표에 빈 줄로 남지 않도록 걸러낸다 (예전에 저장된 데이터 대비)
+  const nutritionEntries = Object.entries(product.nutrition || {}).filter(([, v]) => v && String(v).trim());
+  const showNutrition = nutritionEntries.length > 0 && (product.category === '사료' || product.category === '간식');
 
   return (
     <div className="product-detail-page page-container">
@@ -103,7 +113,7 @@ export default function ProductDetail() {
             
             <div className="product-badges">
               <span className="badge">{isEn ? (categoryEnMap[product.category] || product.category) : product.category}</span>
-              <span className="badge">{isEn ? (petTypeEnMap[product.petType] || product.petType) : product.petType}</span>
+              <span className="badge">{isEn ? (petTypeEnMap[product.petType] || product.petType) : (petTypeKoMap[product.petType] || product.petType)}</span>
             </div>
 
             <div className="product-meta-list">
@@ -209,13 +219,13 @@ export default function ProductDetail() {
                 <h3>{isEn ? 'Main Ingredients' : '사용 원료'}</h3>
                 <p className="ingredients-text">{ingredientsText || (isEn ? 'No ingredient information available.' : '원료 정보가 없습니다.')}</p>
 
-                {product.nutrition && (product.category === '사료' || product.category === '간식') && (
+                {showNutrition && (
                   <>
                     <h3 className="mt-8">{isEn ? 'Guaranteed Analysis / Nutrition' : '등록 성분량'}</h3>
                     <div className="nutrition-table-container">
                       <table className="nutrition-table">
                         <tbody>
-                          {Object.entries(product.nutrition).map(([key, value]) => {
+                          {nutritionEntries.map(([key, value]) => {
                             // 실제 데이터는 영문 키(protein/fat/fiber/...)로 저장되어 있으므로,
                             // 그 영문 키를 기준으로 한글/영문 표시 라벨을 매핑한다.
                             const labelMap = {

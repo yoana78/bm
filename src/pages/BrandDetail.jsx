@@ -7,6 +7,11 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
 import './BrandDetail.css';
 
+// 카테고리/동물종류 한글 -> 영문 매핑 (영어 모드 표시용)
+const categoryEnMap = { '사료': 'Feed', '간식': 'Treats', '모래': 'Litter', '용품': 'Supplies' };
+const petTypeEnMap = { dog: 'Dog', cat: 'Cat' };
+const petTypeKoMap = { dog: '강아지', cat: '고양이' };
+
 const BrandDetail = () => {
   const { brandId } = useParams(); // 주소창의 :brandId 값
   const { lang } = useLanguage();
@@ -76,11 +81,11 @@ const BrandDetail = () => {
                 </div>
                 <div className="product-card-info">
                   <div className="product-tags">
-                    <span className="tag category">{product.category}</span>
-                    <span className="tag pet-type">{product.petType}</span>
+                    <span className="tag category">{isEn ? (categoryEnMap[product.category] || product.category) : product.category}</span>
+                    <span className="tag pet-type">{isEn ? (petTypeEnMap[product.petType] || product.petType) : (petTypeKoMap[product.petType] || product.petType)}</span>
                   </div>
                   <h4>{isEn ? product.nameEn : product.nameKo}</h4>
-                  <p className="product-spec">{product.spec}</p>
+                  <p className="product-spec">{product.spec || (isEn ? 'See specification' : '규격 정보 참조')}</p>
                 </div>
               </Link>
             ))}

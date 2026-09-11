@@ -30,7 +30,6 @@ export function DataProvider({ children }) {
   const [brands, setBrands] = useState(initialBrands);
   const [products, setProducts] = useState(initialProducts);
   const [siteSettings, setSiteSettings] = useState(defaultSiteSettings);
-  const [loaded, setLoaded] = useState(false);
 
   // 페이지가 처음 열릴 때 서버(D1)에서 실제 데이터를 불러옴 — 모든 방문자가 이 API로 같은 데이터를 봄
   useEffect(() => {
@@ -41,8 +40,7 @@ export function DataProvider({ children }) {
         if (Array.isArray(data.products) && data.products.length > 0) setProducts(data.products);
         if (data.siteSettings) setSiteSettings(prev => ({ ...prev, ...data.siteSettings }));
       })
-      .catch(err => console.error('사이트 데이터를 불러오지 못했습니다:', err))
-      .finally(() => setLoaded(true));
+      .catch(err => console.error('사이트 데이터를 불러오지 못했습니다:', err));
   }, []);
 
   // 관리자 페이지에서 사용하는 데이터 조작 함수들 — 전부 서버 API를 호출하고, 성공하면 화면 상태도 갱신함
@@ -149,7 +147,7 @@ export function DataProvider({ children }) {
 
   return (
     <DataContext.Provider value={{
-      brands, products, loaded, addBrand, deleteBrand, updateBrand, moveBrand, addProduct, deleteProduct, updateProduct, resetData,
+      brands, products, addBrand, deleteBrand, updateBrand, moveBrand, addProduct, deleteProduct, updateProduct, resetData,
       siteSettings, updateSiteSettings, addHeroImage, removeHeroImage, moveHeroImage, uploadImage
     }}>
       {children}

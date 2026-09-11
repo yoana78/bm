@@ -311,7 +311,7 @@ export default function Trust() {
       </section>
 
       {/* SECTION: 연도별 해외 박람회 참가 사진 갤러리 (연도마다 하나의 섹션으로 반복 렌더링) */}
-      {expoYearGroups.map(({ year, label, labelKo, labelEn, descKo, descEn, items }, groupIdx) => (
+      {expoYearGroups.map(({ year, labelKo, labelEn, descKo, descEn, items }, groupIdx) => (
         <section
           key={year}
           className="daesang-white-section"
@@ -526,8 +526,8 @@ export default function Trust() {
                 </span>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <button className="modal-nav-btn" onClick={prevPhoto}>&larr; 이전</button>
-                <button className="modal-nav-btn" onClick={nextPhoto}>다음 &rarr;</button>
+                <button className="modal-nav-btn" onClick={prevPhoto}>&larr; {isEn ? 'Prev' : '이전'}</button>
+                <button className="modal-nav-btn" onClick={nextPhoto}>{isEn ? 'Next' : '다음'} &rarr;</button>
               </div>
             </div>
           </div>

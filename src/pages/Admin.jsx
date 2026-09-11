@@ -218,11 +218,13 @@ export default function Admin() {
 
   // 등록 성분량은 사료/간식에만 의미가 있고, 값을 하나도 안 채웠으면 빈 표가 뜨지 않도록
   // nutrition 필드 자체를 아예 생략한다 (undefined로 반환).
+  // 일부만 채운 경우에도 빈 항목이 표에 줄로 남지 않도록, 값이 있는 항목만 남긴다.
   const CATEGORIES_WITH_NUTRITION = ['사료', '간식'];
   const buildNutrition = (category, { protein, fat, fiber, moisture }) => {
     if (!CATEGORIES_WITH_NUTRITION.includes(category)) return undefined;
-    if (!protein && !fat && !fiber && !moisture) return undefined;
-    return { protein, fat, fiber, moisture };
+    const filled = Object.entries({ protein, fat, fiber, moisture }).filter(([, v]) => v && v.trim());
+    if (filled.length === 0) return undefined;
+    return Object.fromEntries(filled);
   };
 
   // 비밀번호 확인 (서버에 저장된 값과 비교, 맞으면 로그인 처리하고 이후 요청에 쓸 토큰을 저장)
@@ -534,7 +536,7 @@ export default function Admin() {
       ? productForm.features.split('\n').filter(f => f.trim())
       : [];
     const shelfLife = productForm.shelfLife;
-    const ingredients = productForm.ingredients || '원료 정보 참조';
+    const ingredients = productForm.ingredients || '';
     const origin = productForm.origin;
 
     const translated = await translateProductFields({
@@ -551,7 +553,7 @@ export default function Admin() {
       nameEn: translated.nameEn || productForm.nameKo,
       brandId: productForm.brandId,
       code: productForm.code || '',
-      spec: productForm.spec || '규격 정보 참조',
+      spec: productForm.spec || '',
       shelfLife,
       shelfLifeEn: translated.shelfLifeEn,
       features: featuresArray,

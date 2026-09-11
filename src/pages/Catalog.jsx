@@ -26,7 +26,6 @@ export default function Catalog() {
   // 현재 선택된 카테고리/브랜드 필터 상태
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedBrand, setSelectedBrand] = useState(initialBrand);
-  const filterBarRef = useRef(null);
   const isFirstRender = useRef(true);
 
   // 필터를 바꿀 때마다 페이지 맨 위로 스크롤 (단, 첫 진입 시에는 제외)
@@ -63,7 +62,7 @@ export default function Catalog() {
       <section className="daesang-white-section">
         <div className="daesang-container-wide">
           {/* SECTION: 카테고리/브랜드 필터 버튼들 */}
-          <div className="daesang-filter-bar" ref={filterBarRef}>
+          <div className="daesang-filter-bar">
             <div className="filter-group">
               <span className="filter-label">CATEGORY:</span>
               {['전체', '사료', '간식', '모래', '용품'].map(cat => (
