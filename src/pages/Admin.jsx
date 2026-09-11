@@ -216,6 +216,15 @@ export default function Admin() {
     return { nameEn: tNameEn, originEn: tOriginEn, shelfLifeEn: tShelfLifeEn, ingredientsEn: tIngredientsEn, featuresEn: tFeaturesEn };
   };
 
+  // 등록 성분량은 사료/간식에만 의미가 있고, 값을 하나도 안 채웠으면 빈 표가 뜨지 않도록
+  // nutrition 필드 자체를 아예 생략한다 (undefined로 반환).
+  const CATEGORIES_WITH_NUTRITION = ['사료', '간식'];
+  const buildNutrition = (category, { protein, fat, fiber, moisture }) => {
+    if (!CATEGORIES_WITH_NUTRITION.includes(category)) return undefined;
+    if (!protein && !fat && !fiber && !moisture) return undefined;
+    return { protein, fat, fiber, moisture };
+  };
+
   // 비밀번호 확인 (서버에 저장된 값과 비교, 맞으면 로그인 처리하고 이후 요청에 쓸 토큰을 저장)
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
@@ -440,12 +449,7 @@ export default function Admin() {
         featuresEn: translated.featuresEn,
         ingredients: editForm.ingredients,
         ingredientsEn: translated.ingredientsEn,
-        nutrition: {
-          protein: editForm.protein,
-          fat: editForm.fat,
-          fiber: editForm.fiber,
-          moisture: editForm.moisture
-        },
+        nutrition: buildNutrition(editForm.category, editForm) || null,
         image: editForm.image,
         purchaseUrl: editForm.purchaseUrl.trim(),
         infoImages: editForm.infoImages
@@ -528,7 +532,7 @@ export default function Admin() {
     const id = `product-${Date.now()}`;
     const featuresArray = productForm.features
       ? productForm.features.split('\n').filter(f => f.trim())
-      : ['고품질 원료 사용', '엄격한 품질 관리'];
+      : [];
     const shelfLife = productForm.shelfLife;
     const ingredients = productForm.ingredients || '원료 정보 참조';
     const origin = productForm.origin;
@@ -558,12 +562,7 @@ export default function Admin() {
       originEn: translated.originEn,
       category: productForm.category,
       petType: productForm.petType,
-      nutrition: {
-        protein: productForm.protein,
-        fat: productForm.fat,
-        fiber: productForm.fiber,
-        moisture: productForm.moisture
-      },
+      nutrition: buildNutrition(productForm.category, productForm) || null,
       image: productForm.image || '',
       purchaseUrl: productForm.purchaseUrl.trim(),
       infoImages: productForm.infoImages
@@ -1259,6 +1258,7 @@ export default function Admin() {
                 />
               </div>
 
+              {(productForm.category === '사료' || productForm.category === '간식') && (
               <div>
                 <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
                   {isEn ? 'Guaranteed Analysis (Protein / Fat / Fiber / Moisture)' : '등록 성분량 (조단백 / 조지방 / 조섬유 / 수분)'}
@@ -1270,6 +1270,7 @@ export default function Admin() {
                   <input type="text" placeholder="예: 12.0% (Max)" value={productForm.moisture} onChange={e => setProductForm({ ...productForm, moisture: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
                 </div>
               </div>
+              )}
 
               <button
                 type="submit"
@@ -1764,6 +1765,7 @@ export default function Admin() {
               />
             </div>
 
+            {(editForm.category === '사료' || editForm.category === '간식') && (
             <div>
               <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
                 {isEn ? 'Guaranteed Analysis (Protein / Fat / Fiber / Moisture)' : '등록 성분량 (조단백 / 조지방 / 조섬유 / 수분)'}
@@ -1775,6 +1777,7 @@ export default function Admin() {
                 <input type="text" placeholder="예: 12.0% (Max)" value={editForm.moisture} onChange={e => setEditForm({ ...editForm, moisture: e.target.value })} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '0.9rem' }} />
               </div>
             </div>
+            )}
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '8px' }}>
               <button

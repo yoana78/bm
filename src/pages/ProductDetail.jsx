@@ -209,7 +209,7 @@ export default function ProductDetail() {
                 <h3>{isEn ? 'Main Ingredients' : '사용 원료'}</h3>
                 <p className="ingredients-text">{ingredientsText || (isEn ? 'No ingredient information available.' : '원료 정보가 없습니다.')}</p>
 
-                {product.nutrition && (
+                {product.nutrition && (product.category === '사료' || product.category === '간식') && (
                   <>
                     <h3 className="mt-8">{isEn ? 'Guaranteed Analysis / Nutrition' : '등록 성분량'}</h3>
                     <div className="nutrition-table-container">
