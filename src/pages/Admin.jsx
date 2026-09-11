@@ -57,7 +57,7 @@ export default function Admin() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const {
-    brands, products, addBrand, deleteBrand, updateBrand, addProduct, deleteProduct, updateProduct, resetData,
+    brands, products, addBrand, deleteBrand, updateBrand, moveBrand, addProduct, deleteProduct, updateProduct, resetData,
     siteSettings, updateSiteSettings, addHeroImage, removeHeroImage, moveHeroImage, uploadImage
   } = useData();
   const [settingsEmail, setSettingsEmail] = useState(siteSettings.contactEmail);
@@ -98,7 +98,8 @@ export default function Admin() {
     descriptionKo: '',
     descriptionEn: '',
     color: '#0066B3',
-    logo: ''
+    logo: '',
+    logoScale: 1
   });
 
   // 기존 브랜드 수정 팝업 상태
@@ -111,7 +112,8 @@ export default function Admin() {
     descriptionKo: '',
     descriptionEn: '',
     color: '#0066B3',
-    logo: ''
+    logo: '',
+    logoScale: 1
   });
 
   // 2. 제품 등록 폼 입력값
@@ -240,7 +242,8 @@ export default function Admin() {
       descriptionKo: brand.descriptionKo || '',
       descriptionEn: brand.descriptionEn || '',
       color: brand.color || '#0066B3',
-      logo: brand.logo || ''
+      logo: brand.logo || '',
+      logoScale: brand.logoScale || 1
     });
   };
 
@@ -272,7 +275,8 @@ export default function Admin() {
         descriptionEn: editBrandForm.descriptionEn,
         color: editBrandForm.color,
         logo: editBrandForm.logo,
-        hasLogo: !!editBrandForm.logo
+        hasLogo: !!editBrandForm.logo,
+        logoScale: Number(editBrandForm.logoScale) || 1
       });
       setSuccessMsg(isEn ? 'Brand updated successfully!' : '브랜드 정보가 수정되었습니다!');
       handleCloseEditBrand();
@@ -402,7 +406,8 @@ export default function Admin() {
       descriptionKo: brandForm.descriptionKo || '프리미엄 펫케어 브랜드',
       descriptionEn: brandForm.descriptionEn || 'Premium Pet Care Brand',
       categories: [],
-      color: brandForm.color || '#0066B3'
+      color: brandForm.color || '#0066B3',
+      logoScale: Number(brandForm.logoScale) || 1
     };
 
     try {
@@ -416,7 +421,8 @@ export default function Admin() {
         descriptionKo: '',
         descriptionEn: '',
         color: '#0066B3',
-        logo: ''
+        logo: '',
+        logoScale: 1
       });
     } catch (err) {
       alert(isEn ? 'Failed to register brand. Please try again.' : '브랜드 등록에 실패했습니다. 다시 시도해 주세요.');
@@ -804,9 +810,24 @@ export default function Admin() {
               {brandForm.logo && (
                 <div style={{ padding: '16px', background: '#FAFAFA', borderRadius: '8px', border: '1px dashed #D1D5DB', textAlign: 'center' }}>
                   <span style={{ display: 'block', fontSize: '0.85rem', color: '#6B7280', marginBottom: '8px' }}>로고 이미지 미리보기</span>
-                  <img src={brandForm.logo} alt="Brand Logo Preview" style={{ maxHeight: '80px', maxWidth: '200px', objectFit: 'contain' }} />
+                  <img src={brandForm.logo} alt="Brand Logo Preview" style={{ maxHeight: `${80 * (Number(brandForm.logoScale) || 1)}px`, maxWidth: '200px', objectFit: 'contain' }} />
                 </div>
               )}
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                  🔍 {isEn ? 'Logo Display Size' : '로고 표시 크기'} ({Number(brandForm.logoScale || 1).toFixed(1)}x)
+                </label>
+                <input
+                  type="range"
+                  min="0.5"
+                  max="2.5"
+                  step="0.1"
+                  value={brandForm.logoScale || 1}
+                  onChange={e => setBrandForm({ ...brandForm, logoScale: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
 
               <button
                 type="submit"
@@ -835,12 +856,34 @@ export default function Admin() {
                 📋 {isEn ? `Registered Brands (${brands.length})` : `등록된 브랜드 목록 (${brands.length}개)`}
               </h3>
               <div style={{ display: 'grid', gap: '10px' }}>
-                {brands.map(b => (
+                {brands.map((b, idx) => (
                   <div key={b.id} style={{
                     display: 'flex', alignItems: 'center', gap: '14px',
                     padding: '12px 16px', background: '#FFFFFF', border: '1px solid #E5E7EB',
                     borderRadius: '8px'
                   }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                      <button
+                        onClick={() => moveBrand(b.id, 'up')}
+                        disabled={idx === 0}
+                        title={isEn ? 'Move up' : '위로 이동'}
+                        style={{
+                          width: '24px', height: '20px', fontSize: '0.7rem', lineHeight: 1,
+                          border: '1px solid #D1D5DB', borderRadius: '4px', cursor: idx === 0 ? 'default' : 'pointer',
+                          backgroundColor: '#FFFFFF', color: idx === 0 ? '#D1D5DB' : '#374151'
+                        }}
+                      >▲</button>
+                      <button
+                        onClick={() => moveBrand(b.id, 'down')}
+                        disabled={idx === brands.length - 1}
+                        title={isEn ? 'Move down' : '아래로 이동'}
+                        style={{
+                          width: '24px', height: '20px', fontSize: '0.7rem', lineHeight: 1,
+                          border: '1px solid #D1D5DB', borderRadius: '4px', cursor: idx === brands.length - 1 ? 'default' : 'pointer',
+                          backgroundColor: '#FFFFFF', color: idx === brands.length - 1 ? '#D1D5DB' : '#374151'
+                        }}
+                      >▼</button>
+                    </div>
                     <div style={{
                       width: '44px', height: '44px', borderRadius: '6px', flexShrink: 0,
                       background: b.hasLogo && b.logo ? `url(${b.logo}) center/contain no-repeat` : b.color,
@@ -1763,9 +1806,24 @@ export default function Admin() {
             {editBrandForm.logo && (
               <div style={{ padding: '16px', background: '#FAFAFA', borderRadius: '8px', border: '1px dashed #D1D5DB', textAlign: 'center' }}>
                 <span style={{ display: 'block', fontSize: '0.85rem', color: '#6B7280', marginBottom: '8px' }}>로고 이미지 미리보기</span>
-                <img src={editBrandForm.logo} alt="Brand Logo Preview" style={{ maxHeight: '80px', maxWidth: '200px', objectFit: 'contain' }} />
+                <img src={editBrandForm.logo} alt="Brand Logo Preview" style={{ maxHeight: `${80 * (Number(editBrandForm.logoScale) || 1)}px`, maxWidth: '200px', objectFit: 'contain' }} />
               </div>
             )}
+
+            <div>
+              <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                🔍 {isEn ? 'Logo Display Size' : '로고 표시 크기'} ({Number(editBrandForm.logoScale || 1).toFixed(1)}x)
+              </label>
+              <input
+                type="range"
+                min="0.5"
+                max="2.5"
+                step="0.1"
+                value={editBrandForm.logoScale || 1}
+                onChange={e => setEditBrandForm({ ...editBrandForm, logoScale: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '8px' }}>
               <button

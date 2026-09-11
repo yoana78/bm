@@ -5,14 +5,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
-import { brands } from '../data/brands';
 import { partners } from '../data/partners';
 import { petRetailPartners } from '../data/petRetailPartners';
 
 export default function Home() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
-  const { siteSettings } = useData(); // 관리자 페이지 "사이트 설정" 탭에서 등록한 히어로 이미지 목록/비전 섹션 배경 이미지
+  const { siteSettings, brands } = useData(); // 관리자 페이지 "사이트 설정" 탭에서 등록한 히어로 이미지 목록/비전 섹션 배경 이미지, 브랜드 목록
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 보여지는 히어로 슬라이드 번호
 
   // 히어로 슬라이드 5장은 전부 같은 문구를 공유하고 사진만 다름 — 관리자가 등록한 이미지 목록(siteSettings.heroImages)으로
@@ -248,7 +247,7 @@ export default function Home() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', minHeight: '68px' }}>
                   <span className="daesang-brand-num" style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--dh-blue)' }}>0{idx + 1}</span>
                   {b.logo && (
-                    <img src={b.logo} alt={b.nameKo} style={{ height: `${logoHeight}px`, maxWidth: '200px', objectFit: 'contain' }} />
+                    <img src={b.logo} alt={b.nameKo} style={{ height: `${logoHeight}px`, maxWidth: '200px', objectFit: 'contain', transform: `scale(${b.logoScale || 1})` }} />
                   )}
                 </div>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--dh-navy)', marginBottom: '6px' }}>

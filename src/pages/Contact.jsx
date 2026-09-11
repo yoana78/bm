@@ -5,13 +5,14 @@
 // 수신 이메일은 Web3Forms 계정에 등록된 주소로 가며, https://web3forms.com 에서 바꿀 수 있습니다.
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { brands } from '../data/brands';
+import { useData } from '../context/DataContext';
 
 const WEB3FORMS_ACCESS_KEY = '8207939c-fd68-4c59-ae20-62ea022b6952';
 
 export default function Contact() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
+  const { brands } = useData();
 
   // 문의 폼 입력값 상태
   const [formData, setFormData] = useState({

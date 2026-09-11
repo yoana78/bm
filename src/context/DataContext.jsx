@@ -49,7 +49,9 @@ export function DataProvider({ children }) {
   const addBrand = async (newBrand) => {
     const res = await fetch('/api/brands', { method: 'POST', headers: authHeaders(), body: JSON.stringify(newBrand) });
     if (!res.ok) throw new Error((await res.json()).error || '브랜드 등록 실패');
-    setBrands(prev => [newBrand, ...prev]);
+    // 서버는 새 브랜드에 가장 큰 position(맨 마지막 노출 순서)을 매기므로, 로컬 상태도
+    // 맨 뒤에 붙여야 새로고침 전후로 순서가 달라지지 않는다.
+    setBrands(prev => [...prev, newBrand]);
   };
 
   const deleteBrand = async (id) => {
@@ -65,10 +67,26 @@ export function DataProvider({ children }) {
     setBrands(prev => prev.map(b => b.id === id ? brand : b));
   };
 
+  // 관리자 페이지에서 브랜드를 한 칸 위/아래로 옮길 때 사용 — 인접한 두 브랜드의 노출 순서(position)를 맞바꾼다
+  const moveBrand = async (id, direction) => {
+    const idx = brands.findIndex(b => b.id === id);
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (idx === -1 || swapIdx < 0 || swapIdx >= brands.length) return;
+
+    const next = [...brands];
+    [next[idx], next[swapIdx]] = [next[swapIdx], next[idx]];
+    setBrands(next);
+
+    await Promise.all([
+      fetch(`/api/brands/${encodeURIComponent(next[idx].id)}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ position: idx }) }),
+      fetch(`/api/brands/${encodeURIComponent(next[swapIdx].id)}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ position: swapIdx }) })
+    ]);
+  };
+
   const addProduct = async (newProduct) => {
     const res = await fetch('/api/products', { method: 'POST', headers: authHeaders(), body: JSON.stringify(newProduct) });
     if (!res.ok) throw new Error((await res.json()).error || '제품 등록 실패');
-    setProducts(prev => [newProduct, ...prev]);
+    setProducts(prev => [...prev, newProduct]);
   };
 
   const deleteProduct = async (id) => {
@@ -131,7 +149,7 @@ export function DataProvider({ children }) {
 
   return (
     <DataContext.Provider value={{
-      brands, products, loaded, addBrand, deleteBrand, updateBrand, addProduct, deleteProduct, updateProduct, resetData,
+      brands, products, loaded, addBrand, deleteBrand, updateBrand, moveBrand, addProduct, deleteProduct, updateProduct, resetData,
       siteSettings, updateSiteSettings, addHeroImage, removeHeroImage, moveHeroImage, uploadImage
     }}>
       {children}

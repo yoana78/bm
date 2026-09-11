@@ -34,7 +34,7 @@ const BrandDetail = () => {
           <div className="brand-hero-content">
             <div className="brand-logo-large-container">
               {brand.hasLogo ? (
-                <img src={brand.logo} alt={isEn ? brand.nameEn : brand.nameKo} className="brand-logo-large" />
+                <img src={brand.logo} alt={isEn ? brand.nameEn : brand.nameKo} className="brand-logo-large" style={{ transform: `scale(${brand.logoScale || 1})` }} />
               ) : (
                 <h1 className="brand-text-logo-large">{isEn ? brand.nameEn : brand.nameKo}</h1>
               )}

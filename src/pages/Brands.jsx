@@ -34,7 +34,10 @@ export default function Brands() {
                     <img
                       src={b.logo}
                       alt={b.nameEn}
-                      style={['dayspo', 'evergrow', 'bellbird'].includes(b.id) ? { maxHeight: '54px', maxWidth: '126px' } : undefined}
+                      style={{
+                        ...(['dayspo', 'evergrow', 'bellbird'].includes(b.id) ? { maxHeight: '54px', maxWidth: '126px' } : undefined),
+                        transform: `scale(${b.logoScale || 1})`
+                      }}
                     />
                   ) : (
                     <h3 style={{ color: b.color, fontSize: '1.8rem' }}>{b.nameKo}</h3>

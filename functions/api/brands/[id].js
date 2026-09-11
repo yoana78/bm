@@ -6,15 +6,21 @@ export async function onRequestPut(context) {
   if (unauthorized) return unauthorized;
 
   const { env, params } = context;
-  const updates = await context.request.json();
+  const { position, ...updates } = await context.request.json();
 
   const existing = await env.DB.prepare('SELECT data FROM brands WHERE id = ?').bind(params.id).first();
   if (!existing) return Response.json({ error: 'Not found' }, { status: 404 });
 
   const merged = { ...JSON.parse(existing.data), ...updates };
-  await env.DB.prepare('UPDATE brands SET data = ?, updated_at = datetime(\'now\') WHERE id = ?')
-    .bind(JSON.stringify(merged), params.id)
-    .run();
+  if (position !== undefined) {
+    await env.DB.prepare('UPDATE brands SET data = ?, position = ?, updated_at = datetime(\'now\') WHERE id = ?')
+      .bind(JSON.stringify(merged), position, params.id)
+      .run();
+  } else {
+    await env.DB.prepare('UPDATE brands SET data = ?, updated_at = datetime(\'now\') WHERE id = ?')
+      .bind(JSON.stringify(merged), params.id)
+      .run();
+  }
 
   return Response.json({ ok: true, brand: merged });
 }
