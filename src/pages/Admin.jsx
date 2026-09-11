@@ -170,6 +170,24 @@ export default function Admin() {
     return uploadImage(dataUrl);
   };
 
+  // 영문 설명을 비워두면 한글 설명을 자동 번역해서 채워주는 헬퍼 (실패 시 조용히 빈 값 유지)
+  const translateText = async (text) => {
+    if (!text || !text.trim()) return '';
+    try {
+      const token = sessionStorage.getItem(ADMIN_TOKEN_KEY) || '';
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ text })
+      });
+      if (!res.ok) return '';
+      const { translated } = await res.json();
+      return translated || '';
+    } catch {
+      return '';
+    }
+  };
+
   // 비밀번호 확인 (서버에 저장된 값과 비교, 맞으면 로그인 처리하고 이후 요청에 쓸 토큰을 저장)
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
@@ -266,13 +284,14 @@ export default function Admin() {
   const handleSaveBrandEdit = async (e) => {
     e.preventDefault();
     try {
+      const descriptionEn = editBrandForm.descriptionEn || await translateText(editBrandForm.descriptionKo);
       await updateBrand(editingBrandId, {
         nameKo: editBrandForm.nameKo,
         nameEn: editBrandForm.nameEn || editBrandForm.nameKo,
         type: editBrandForm.type,
         tagline: editBrandForm.tagline,
         descriptionKo: editBrandForm.descriptionKo,
-        descriptionEn: editBrandForm.descriptionEn,
+        descriptionEn,
         color: editBrandForm.color,
         logo: editBrandForm.logo,
         hasLogo: !!editBrandForm.logo,
@@ -395,6 +414,9 @@ export default function Admin() {
       ? brandForm.nameEn.toLowerCase().replace(/[^a-z0-9]/g, '')
       : `brand_${Date.now()}`;
 
+    const descriptionKo = brandForm.descriptionKo || '프리미엄 펫케어 브랜드';
+    const descriptionEn = brandForm.descriptionEn || await translateText(descriptionKo) || 'Premium Pet Care Brand';
+
     const newBrand = {
       id,
       nameKo: brandForm.nameKo,
@@ -403,8 +425,8 @@ export default function Admin() {
       tagline: brandForm.tagline || 'Total Care for Pet Life',
       logo: brandForm.logo || '',
       hasLogo: !!brandForm.logo,
-      descriptionKo: brandForm.descriptionKo || '프리미엄 펫케어 브랜드',
-      descriptionEn: brandForm.descriptionEn || 'Premium Pet Care Brand',
+      descriptionKo,
+      descriptionEn,
       categories: [],
       color: brandForm.color || '#0066B3',
       logoScale: Number(brandForm.logoScale) || 1

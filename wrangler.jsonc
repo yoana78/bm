@@ -9,5 +9,8 @@
       "database_name": "boomyung-db",
       "database_id": "a1156860-f3a6-41d0-82b8-3b16c3790c30"
     }
-  ]
+  ],
+  "ai": {
+    "binding": "AI"
+  }
 }
