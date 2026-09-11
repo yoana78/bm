@@ -174,18 +174,18 @@ export default function ProductDetail() {
             {/* SECTION: "상세 정보" 탭 내용 - 특징 목록과 상세 이미지 */}
             {activeTab === 'info' && (
               <div className="info-tab">
-                <h3>{isEn ? 'Key Features' : '제품 특징'}</h3>
-                {featuresList.length > 0 ? (
-                  <ul className="feature-list">
-                    {featuresList.map((feature, idx) => (
-                      <li key={idx}>
-                        <span className="check-icon">✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="no-data">{isEn ? 'No feature information available.' : '특징 정보가 없습니다.'}</p>
+                {featuresList.length > 0 && (
+                  <>
+                    <h3>{isEn ? 'Key Features' : '제품 특징'}</h3>
+                    <ul className="feature-list">
+                      {featuresList.map((feature, idx) => (
+                        <li key={idx}>
+                          <span className="check-icon">✓</span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
                 )}
 
                 {Array.isArray(product.infoImages) && product.infoImages.length > 0 && (
