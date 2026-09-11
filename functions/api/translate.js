@@ -13,7 +13,7 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const result = await env.AI.run('@cf/qwen/qwen3-30b-a3b-fp8', {
+    const result = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
       messages: [
         {
           role: 'user',
@@ -23,7 +23,7 @@ export async function onRequestPost(context) {
       max_tokens: 300,
       temperature: 0
     });
-    return Response.json({ translated: (result.response || '').trim() });
+    return Response.json({ translated: (result.response || '').trim(), _debug: result });
   } catch (err) {
     return Response.json({ error: '번역 실패', detail: String(err) }, { status: 500 });
   }
