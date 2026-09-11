@@ -153,9 +153,6 @@ export default function Contact() {
                     <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--dh-blue)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                       {isEn ? card.titleEn : card.titleKo}
                     </span>
-                    <span style={{ fontSize: '0.7rem', background: '#EBF5FF', color: 'var(--dh-blue)', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 }}>
-                      {isEn ? 'VERIFIED B2B' : '담당자 지정'}
-                    </span>
                   </div>
 
                   <div
