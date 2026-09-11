@@ -13,15 +13,15 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
+    const result = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
       messages: [
         {
-          role: 'system',
-          content: 'You translate Korean pet-industry marketing copy into natural, concise English. Reply with ONLY the English translation — no quotes, no explanation, no preamble.'
-        },
-        { role: 'user', content: text.trim() }
+          role: 'user',
+          content: `Translate the following Korean text into English. This is a literal translation task, not a creative writing task — do not invent new content, do not add anything that isn't in the source text. Output ONLY the translated text, with no quotes, labels, or commentary.\n\nKorean text:\n${text.trim()}`
+        }
       ],
-      max_tokens: 300
+      max_tokens: 300,
+      temperature: 0.1
     });
     return Response.json({ translated: (result.response || '').trim() });
   } catch (err) {
