@@ -18,7 +18,7 @@ export async function onRequestPost(context) {
       source_lang: 'korean',
       target_lang: 'english'
     });
-    return Response.json({ translated: (result.translated_text || '').trim() });
+    return Response.json({ translated: (result.translated_text || '').trim(), _debug: result });
   } catch (err) {
     return Response.json({ error: '번역 실패', detail: String(err) }, { status: 500 });
   }
