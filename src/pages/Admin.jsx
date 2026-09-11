@@ -189,6 +189,13 @@ export default function Admin() {
     }
   };
 
+  // 브랜드 슬로건(tagline)은 언어별 필드가 따로 없이 항상 영문으로 노출되는 필드라서,
+  // 한글로 입력된 경우에만 감지해서 영문으로 바꿔치기한다 (이미 영문이면 그대로 둠)
+  const translateIfKorean = async (text) => {
+    if (!text || !/[가-힣]/.test(text)) return text || '';
+    return (await translateText(text)) || text;
+  };
+
   // 제품 등록/수정 시 비어있는 영문 항목들(제품명, 원산지, 유통기한, 원료, 특징)을 한 번에 번역
   const translateProductFields = async ({ nameKo, nameEn, origin, originEn, shelfLife, shelfLifeEn, ingredients, ingredientsEn, features, featuresEn }) => {
     const [tNameEn, tOriginEn, tShelfLifeEn, tIngredientsEn, tFeaturesEn] = await Promise.all([
@@ -298,11 +305,12 @@ export default function Admin() {
     e.preventDefault();
     try {
       const descriptionEn = editBrandForm.descriptionEn || await translateText(editBrandForm.descriptionKo);
+      const tagline = await translateIfKorean(editBrandForm.tagline);
       await updateBrand(editingBrandId, {
         nameKo: editBrandForm.nameKo,
         nameEn: editBrandForm.nameEn || editBrandForm.nameKo,
         type: editBrandForm.type,
-        tagline: editBrandForm.tagline,
+        tagline,
         descriptionKo: editBrandForm.descriptionKo,
         descriptionEn,
         color: editBrandForm.color,
@@ -444,13 +452,14 @@ export default function Admin() {
 
     const descriptionKo = brandForm.descriptionKo || '프리미엄 펫케어 브랜드';
     const descriptionEn = brandForm.descriptionEn || await translateText(descriptionKo) || 'Premium Pet Care Brand';
+    const tagline = brandForm.tagline ? await translateIfKorean(brandForm.tagline) : 'Total Care for Pet Life';
 
     const newBrand = {
       id,
       nameKo: brandForm.nameKo,
       nameEn: brandForm.nameEn || brandForm.nameKo,
       type: brandForm.type, // 'own' → 브랜드 페이지, 'imported' → 수입브랜드 페이지
-      tagline: brandForm.tagline || 'Total Care for Pet Life',
+      tagline,
       logo: brandForm.logo || '',
       hasLogo: !!brandForm.logo,
       descriptionKo,
