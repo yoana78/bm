@@ -11,6 +11,7 @@ export async function onRequestPost(context) {
   if (!text || !text.trim()) {
     return Response.json({ translated: '' });
   }
+  const debugReceived = { text, length: text.length, codePoints: Array.from(text).map(c => c.codePointAt(0)) };
 
   try {
     const result = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
@@ -23,7 +24,7 @@ export async function onRequestPost(context) {
       max_tokens: 300,
       temperature: 0
     });
-    return Response.json({ translated: (result.response || '').trim(), _debug: result });
+    return Response.json({ translated: (result.response || '').trim(), _debugReceived: debugReceived });
   } catch (err) {
     return Response.json({ error: '번역 실패', detail: String(err) }, { status: 500 });
   }
