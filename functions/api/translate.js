@@ -13,7 +13,7 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const result = await env.AI.run('@cf/qwen/qwen1.5-14b-chat-awq', {
+    const result = await env.AI.run('@cf/qwen/qwen3-30b-a3b-fp8', {
       messages: [
         {
           role: 'user',
