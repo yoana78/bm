@@ -64,6 +64,7 @@ export default function Admin() {
   const [productFilterBrand, setProductFilterBrand] = useState('');
   const [productSearch, setProductSearch] = useState('');
   const [editingProductId, setEditingProductId] = useState(null);
+  const [editingProductOriginal, setEditingProductOriginal] = useState(null); // 기존 영문 번역값을 덮어쓰지 않기 위해 원본을 보관
   const [editForm, setEditForm] = useState({
     nameKo: '',
     nameEn: '',
@@ -170,7 +171,7 @@ export default function Admin() {
     return uploadImage(dataUrl);
   };
 
-  // 영문 설명을 비워두면 한글 설명을 자동 번역해서 채워주는 헬퍼 (실패 시 조용히 빈 값 유지)
+  // 영문 항목을 비워두면 한글 값을 자동 번역해서 채워주는 헬퍼 (실패 시 조용히 빈 값 유지)
   const translateText = async (text) => {
     if (!text || !text.trim()) return '';
     try {
@@ -186,6 +187,18 @@ export default function Admin() {
     } catch {
       return '';
     }
+  };
+
+  // 제품 등록/수정 시 비어있는 영문 항목들(제품명, 원산지, 유통기한, 원료, 특징)을 한 번에 번역
+  const translateProductFields = async ({ nameKo, nameEn, origin, originEn, shelfLife, shelfLifeEn, ingredients, ingredientsEn, features, featuresEn }) => {
+    const [tNameEn, tOriginEn, tShelfLifeEn, tIngredientsEn, tFeaturesEn] = await Promise.all([
+      nameEn || translateText(nameKo),
+      originEn || translateText(origin),
+      shelfLifeEn || translateText(shelfLife),
+      ingredientsEn || translateText(ingredients),
+      featuresEn && featuresEn.length ? featuresEn : Promise.all((features || []).map(translateText))
+    ]);
+    return { nameEn: tNameEn, originEn: tOriginEn, shelfLifeEn: tShelfLifeEn, ingredientsEn: tIngredientsEn, featuresEn: tFeaturesEn };
   };
 
   // 비밀번호 확인 (서버에 저장된 값과 비교, 맞으면 로그인 처리하고 이후 요청에 쓸 토큰을 저장)
@@ -320,6 +333,7 @@ export default function Admin() {
   // 기존 제품의 "수정" 버튼 클릭 시 - 수정 폼에 해당 제품 정보를 채워 넣고 팝업을 염
   const handleOpenEdit = (product) => {
     setEditingProductId(product.id);
+    setEditingProductOriginal(product);
     const rawFeatures = Array.isArray(product.features) ? product.features.join('\n') : (product.features || '');
     setEditForm({
       nameKo: product.nameKo || '',
@@ -376,20 +390,34 @@ export default function Admin() {
     const featuresArray = editForm.features
       ? editForm.features.split('\n').filter(f => f.trim())
       : [];
+    const original = editingProductOriginal || {};
+
+    // 기존에 이미 저장돼있던 영문 번역은 덮어쓰지 않고, 비어있는 것만 새로 번역해서 채운다
+    const translated = await translateProductFields({
+      nameKo: editForm.nameKo, nameEn: editForm.nameEn || original.nameEn,
+      origin: editForm.origin, originEn: original.originEn,
+      shelfLife: editForm.shelfLife, shelfLifeEn: original.shelfLifeEn,
+      ingredients: editForm.ingredients, ingredientsEn: original.ingredientsEn,
+      features: featuresArray, featuresEn: original.featuresEn
+    });
 
     try {
       await updateProduct(editingProductId, {
         nameKo: editForm.nameKo,
-        nameEn: editForm.nameEn || editForm.nameKo,
+        nameEn: translated.nameEn || editForm.nameKo,
         brandId: editForm.brandId,
         category: editForm.category,
         petType: editForm.petType,
         code: editForm.code,
         spec: editForm.spec,
         shelfLife: editForm.shelfLife,
+        shelfLifeEn: translated.shelfLifeEn,
         origin: editForm.origin,
+        originEn: translated.originEn,
         features: featuresArray,
+        featuresEn: translated.featuresEn,
         ingredients: editForm.ingredients,
+        ingredientsEn: translated.ingredientsEn,
         image: editForm.image,
         purchaseUrl: editForm.purchaseUrl.trim(),
         infoImages: editForm.infoImages
@@ -469,18 +497,33 @@ export default function Admin() {
     const featuresArray = productForm.features
       ? productForm.features.split('\n').filter(f => f.trim())
       : ['고품질 원료 사용', '엄격한 품질 관리'];
+    const shelfLife = productForm.shelfLife;
+    const ingredients = productForm.ingredients || '원료 정보 참조';
+    const origin = productForm.origin;
+
+    const translated = await translateProductFields({
+      nameKo: productForm.nameKo, nameEn: productForm.nameEn,
+      origin, originEn: '',
+      shelfLife, shelfLifeEn: '',
+      ingredients, ingredientsEn: '',
+      features: featuresArray, featuresEn: null
+    });
 
     const newProduct = {
       id,
       nameKo: productForm.nameKo,
-      nameEn: productForm.nameEn || productForm.nameKo,
+      nameEn: translated.nameEn || productForm.nameKo,
       brandId: productForm.brandId,
       code: productForm.code || '',
       spec: productForm.spec || '규격 정보 참조',
-      shelfLife: productForm.shelfLife,
+      shelfLife,
+      shelfLifeEn: translated.shelfLifeEn,
       features: featuresArray,
-      ingredients: productForm.ingredients || '원료 정보 참조',
-      origin: productForm.origin,
+      featuresEn: translated.featuresEn,
+      ingredients,
+      ingredientsEn: translated.ingredientsEn,
+      origin,
+      originEn: translated.originEn,
       category: productForm.category,
       petType: productForm.petType,
       image: productForm.image || '',
