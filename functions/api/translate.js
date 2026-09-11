@@ -13,17 +13,12 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const result = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+    const result = await env.AI.run('@cf/qwen/qwen1.5-14b-chat-awq', {
       messages: [
         {
-          role: 'system',
-          content: 'You are a translation engine, not a copywriter. You only ever output a direct, literal English translation of the exact Korean text given to you. You never invent slogans, taglines, or marketing copy that is not a translation of the input. You never add information that is not present in the source text.'
-        },
-        { role: 'user', content: '프리미엄 펫 케어 전문브랜드' },
-        { role: 'assistant', content: 'Premium pet care specialty brand' },
-        { role: 'user', content: '30년 이상 축적된 정직한 기술과 신뢰' },
-        { role: 'assistant', content: 'Honest technology and trust accumulated over 30 years' },
-        { role: 'user', content: text.trim() }
+          role: 'user',
+          content: `You are a machine translation API. Translate the Korean text between <ko></ko> tags into English. Output ONLY the raw English translation on a single line — no tags, no quotes, no notes, no alternatives.\n\nExample:\n<ko>프리미엄 펫 케어 전문브랜드</ko>\nPremium pet care specialty brand\n\nNow translate this:\n<ko>${text.trim()}</ko>`
+        }
       ],
       max_tokens: 300,
       temperature: 0
