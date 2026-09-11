@@ -22,6 +22,10 @@ export default function About() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const [galleryImages, setGalleryImages] = useState(null); // 현재 팝업으로 보여줄 갤러리 이미지 목록 (없으면 null)
+  const [galleryIndex, setGalleryIndex] = useState(0); // 갤러리 팝업에서 현재 크게 보여지는 이미지의 인덱스
+  const closeGallery = () => setGalleryImages(null);
+  const prevGalleryImage = () => setGalleryIndex(i => (i - 1 + galleryImages.length) % galleryImages.length);
+  const nextGalleryImage = () => setGalleryIndex(i => (i + 1) % galleryImages.length);
   const [showLogisticsVideo, setShowLogisticsVideo] = useState(false); // 물류센터 소개 영상 팝업 표시 여부
 
   // 회사 연혁 목록 (연도순, 최신이 위) - "3. 연혁" 섹션의 타임라인에 표시됨
@@ -202,7 +206,7 @@ export default function About() {
             {isEn ? 'Infrastructure' : '생산 및 R&D 인프라'}
           </h2>
           <div className="daesang-trust-grid">
-            <div className="daesang-trust-card" onClick={() => setGalleryImages(homadImages)} style={{ cursor: 'pointer' }}>
+            <div className="daesang-trust-card" onClick={() => { setGalleryImages(homadImages); setGalleryIndex(0); }} style={{ cursor: 'pointer' }}>
               <span className="trust-code">KOREA FACTORY</span>
               <h3>{isEn ? 'Homad Pet Food & Snack Factory' : '호마드 사료 및 간식 공장'}</h3>
               <p>
@@ -216,7 +220,7 @@ export default function About() {
               </div>
             </div>
 
-            <div className="daesang-trust-card" onClick={() => setGalleryImages(wellzenImages)} style={{ cursor: 'pointer' }}>
+            <div className="daesang-trust-card" onClick={() => { setGalleryImages(wellzenImages); setGalleryIndex(0); }} style={{ cursor: 'pointer' }}>
               <span className="trust-code">R&amp;D CENTER</span>
               <h3>{isEn ? 'Wellzen R&D Center' : '웰젠 R&D 연구소'}</h3>
               <p>
@@ -383,50 +387,21 @@ export default function About() {
         </div>
       )}
 
-      {/* SECTION: 인프라 카드 클릭 시 나오는 이미지 갤러리 팝업 */}
+      {/* SECTION: 인프라 카드 클릭 시 나오는 이미지 확대(라이트박스) 팝업 - 이전/다음 이동 가능 */}
       {galleryImages && (
-        <div className="modal-backdrop" onClick={() => setGalleryImages(null)}>
-          <div
-            className="modal-content"
-            onClick={e => e.stopPropagation()}
-            style={{ maxWidth: '760px', maxHeight: '85vh', overflowY: 'auto', background: 'transparent', boxShadow: 'none', padding: '12px' }}
-          >
-            <button className="modal-close-btn" onClick={() => setGalleryImages(null)}>&times;</button>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${galleryImages.length === 4 ? 2 : Math.min(galleryImages.length, 3)}, 1fr)`,
-                gap: '20px'
-              }}
-            >
-              {galleryImages.map((src, i) => (
-                <div
-                  key={i}
-                  style={{
-                    aspectRatio: '4 / 3',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    boxShadow: '0 14px 32px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.25)',
-                    background: '#F3F4F6'
-                  }}
-                >
-                  <img
-                    src={src}
-                    alt=""
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.3s ease',
-                      cursor: 'zoom-in'
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.5)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-                  />
+        <div className="modal-backdrop" onClick={closeGallery}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={closeGallery}>&times;</button>
+            <img src={galleryImages[galleryIndex]} alt="" />
+            {galleryImages.length > 1 && (
+              <div className="modal-caption">
+                <span style={{ fontSize: '0.85rem', color: '#AAA' }}>{galleryIndex + 1} / {galleryImages.length}</span>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button className="modal-nav-btn" onClick={prevGalleryImage}>&larr; {isEn ? 'Prev' : '이전'}</button>
+                  <button className="modal-nav-btn" onClick={nextGalleryImage}>{isEn ? 'Next' : '다음'} &rarr;</button>
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}
