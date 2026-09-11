@@ -13,12 +13,20 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const result = await env.AI.run('@cf/meta/m2m100-1.2b', {
-      text: text.trim(),
-      source_lang: 'korean',
-      target_lang: 'english'
-    });
-    return Response.json({ translated: (result.translated_text || '').trim(), _debug: result });
+    const attempts = [
+      { source_lang: 'korean', target_lang: 'english' },
+      { source_lang: 'ko', target_lang: 'en' }
+    ];
+    const results = [];
+    for (const params of attempts) {
+      try {
+        const r = await env.AI.run('@cf/meta/m2m100-1.2b', { text: text.trim(), ...params });
+        results.push({ params, r });
+      } catch (e) {
+        results.push({ params, error: String(e) });
+      }
+    }
+    return Response.json({ translated: '', _debug: results });
   } catch (err) {
     return Response.json({ error: '번역 실패', detail: String(err) }, { status: 500 });
   }
