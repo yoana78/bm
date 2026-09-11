@@ -96,6 +96,7 @@ export default function Admin() {
     nameEn: '',
     type: 'own', // 'own' = 브랜드(자사) 페이지, 'imported' = 수입브랜드 페이지에 노출
     tagline: '',
+    taglineEn: '',
     descriptionKo: '',
     descriptionEn: '',
     color: '#0066B3',
@@ -110,6 +111,7 @@ export default function Admin() {
     nameEn: '',
     type: 'own',
     tagline: '',
+    taglineEn: '',
     descriptionKo: '',
     descriptionEn: '',
     color: '#0066B3',
@@ -187,13 +189,6 @@ export default function Admin() {
     } catch {
       return '';
     }
-  };
-
-  // 브랜드 슬로건(tagline)은 언어별 필드가 따로 없이 항상 영문으로 노출되는 필드라서,
-  // 한글로 입력된 경우에만 감지해서 영문으로 바꿔치기한다 (이미 영문이면 그대로 둠)
-  const translateIfKorean = async (text) => {
-    if (!text || !/[가-힣]/.test(text)) return text || '';
-    return (await translateText(text)) || text;
   };
 
   // 제품 등록/수정 시 비어있는 영문 항목들(제품명, 원산지, 유통기한, 원료, 특징)을 한 번에 번역
@@ -277,6 +272,7 @@ export default function Admin() {
       nameEn: brand.nameEn || '',
       type: brand.type === 'imported' ? 'imported' : 'own',
       tagline: brand.tagline || '',
+      taglineEn: brand.taglineEn || '',
       descriptionKo: brand.descriptionKo || '',
       descriptionEn: brand.descriptionEn || '',
       color: brand.color || '#0066B3',
@@ -305,12 +301,13 @@ export default function Admin() {
     e.preventDefault();
     try {
       const descriptionEn = editBrandForm.descriptionEn || await translateText(editBrandForm.descriptionKo);
-      const tagline = await translateIfKorean(editBrandForm.tagline);
+      const taglineEn = editBrandForm.taglineEn || await translateText(editBrandForm.tagline);
       await updateBrand(editingBrandId, {
         nameKo: editBrandForm.nameKo,
         nameEn: editBrandForm.nameEn || editBrandForm.nameKo,
         type: editBrandForm.type,
-        tagline,
+        tagline: editBrandForm.tagline,
+        taglineEn,
         descriptionKo: editBrandForm.descriptionKo,
         descriptionEn,
         color: editBrandForm.color,
@@ -452,7 +449,8 @@ export default function Admin() {
 
     const descriptionKo = brandForm.descriptionKo || '프리미엄 펫케어 브랜드';
     const descriptionEn = brandForm.descriptionEn || await translateText(descriptionKo) || 'Premium Pet Care Brand';
-    const tagline = brandForm.tagline ? await translateIfKorean(brandForm.tagline) : 'Total Care for Pet Life';
+    const tagline = brandForm.tagline || 'Total Care for Pet Life';
+    const taglineEn = brandForm.taglineEn || (brandForm.tagline ? await translateText(tagline) : '') || 'Total Care for Pet Life';
 
     const newBrand = {
       id,
@@ -460,6 +458,7 @@ export default function Admin() {
       nameEn: brandForm.nameEn || brandForm.nameKo,
       type: brandForm.type, // 'own' → 브랜드 페이지, 'imported' → 수입브랜드 페이지
       tagline,
+      taglineEn,
       logo: brandForm.logo || '',
       hasLogo: !!brandForm.logo,
       descriptionKo,
@@ -477,6 +476,7 @@ export default function Admin() {
         nameEn: '',
         type: 'own',
         tagline: '',
+        taglineEn: '',
         descriptionKo: '',
         descriptionEn: '',
         color: '#0066B3',
@@ -807,17 +807,31 @@ export default function Admin() {
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
-                  {isEn ? 'Brand Tagline / Slogan' : '브랜드 슬로건 (Tagline)'}
-                </label>
-                <input
-                  type="text"
-                  placeholder="예: Healthy & Happy Pet Care"
-                  value={brandForm.tagline}
-                  onChange={e => setBrandForm({ ...brandForm, tagline: e.target.value })}
-                  style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
-                />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                    {isEn ? 'Tagline (Korean)' : '브랜드 슬로건 (한글)'}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="예: 건강하고 행복한 반려동물 케어"
+                    value={brandForm.tagline}
+                    onChange={e => setBrandForm({ ...brandForm, tagline: e.target.value })}
+                    style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                    {isEn ? 'Tagline (English)' : '브랜드 슬로건 (영문, 비워두면 자동 번역)'}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="예: Healthy & Happy Pet Care"
+                    value={brandForm.taglineEn}
+                    onChange={e => setBrandForm({ ...brandForm, taglineEn: e.target.value })}
+                    style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -1807,16 +1821,29 @@ export default function Admin() {
               </div>
             </div>
 
-            <div>
-              <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
-                {isEn ? 'Brand Tagline / Slogan' : '브랜드 슬로건 (Tagline)'}
-              </label>
-              <input
-                type="text"
-                value={editBrandForm.tagline}
-                onChange={e => setEditBrandForm({ ...editBrandForm, tagline: e.target.value })}
-                style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
-              />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div>
+                <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                  {isEn ? 'Tagline (Korean)' : '브랜드 슬로건 (한글)'}
+                </label>
+                <input
+                  type="text"
+                  value={editBrandForm.tagline}
+                  onChange={e => setEditBrandForm({ ...editBrandForm, tagline: e.target.value })}
+                  style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#374151' }}>
+                  {isEn ? 'Tagline (English)' : '브랜드 슬로건 (영문, 비워두면 자동 번역)'}
+                </label>
+                <input
+                  type="text"
+                  value={editBrandForm.taglineEn}
+                  onChange={e => setEditBrandForm({ ...editBrandForm, taglineEn: e.target.value })}
+                  style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #D1D5DB', fontSize: '1rem' }}
+                />
+              </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>

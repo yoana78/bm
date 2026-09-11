@@ -40,7 +40,7 @@ const BrandDetail = () => {
               )}
             </div>
             <h2>{isEn ? brand.nameEn : brand.nameKo}</h2>
-            <p className="brand-hero-tagline">{brand.tagline}</p>
+            <p className="brand-hero-tagline">{isEn ? (brand.taglineEn || brand.tagline) : brand.tagline}</p>
             <p className="brand-hero-desc">
               {isEn
                 ? 'Aiming for a healthy life for pets through top quality and innovative research. We satisfy both customers and pets through strict quality control and reliable ingredients.'
