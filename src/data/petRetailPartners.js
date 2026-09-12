@@ -7,6 +7,6 @@ export const petRetailPartners = [
   { id: 'gangajidaetongryeong', nameKo: '강아지대통령', nameEn: 'Gangaji President', logo: './assets/pet-retail/gangajidaetongryeong.png' },
   { id: 'gyeonsaengnyangpum', nameKo: '견생냥품', nameEn: 'Gyeonsaengnyangpum', logo: './assets/pet-retail/gyeonsaengnyangpum.png' },
   { id: 'goyangidaetongryeong', nameKo: '고양이대통령', nameEn: 'Goyangi President', logo: './assets/pet-retail/goyangidaetongryeong.png' },
-  { id: 'amudoeopsgae', nameKo: '아무도없개', nameEn: 'Amudoeopsgae', logo: './assets/pet-retail/amudoeopsgae.png' },
+  { id: 'amudoeopsgae', nameKo: '아무도없개', nameEn: 'Amudoeopsgae', logo: './assets/pet-retail/amudoeopsgae.png' , logoScale: 1.2 },
   { id: 'petmart', nameKo: '펫마트', nameEn: 'PET MART', logo: './assets/pet-retail/petmart.png' }
 ];

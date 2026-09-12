@@ -36,10 +36,11 @@ export const LIST_SCHEMA = {
     page: 'home',
     note: '홈 화면과 신뢰와 인증 페이지에 함께 표시됩니다.',
     itemLabel: (item) => item.nameKo || '새 파트너',
-    newItem: () => ({ id: `partner-${Date.now()}`, nameKo: '', nameEn: '', logo: '' }),
+    newItem: () => ({ id: `partner-${Date.now()}`, nameKo: '', nameEn: '', logo: '', logoScale: 1 }),
     fields: [
       { key: 'name', label: '이름', type: 'text' },
-      { key: 'logo', label: '로고', type: 'image', width: 400, height: 200, fit: 'contain' }
+      { key: 'logo', label: '로고', type: 'image', width: 400, height: 200, fit: 'contain', scaleKey: 'logoScale' },
+      { key: 'logoScale', label: '로고 표시 크기', type: 'scale' }
     ]
   },
   petRetailPartners: {
@@ -47,10 +48,11 @@ export const LIST_SCHEMA = {
     page: 'home',
     note: '홈 화면과 신뢰와 인증 페이지에 함께 표시됩니다. 로고를 비워두면 "로고 추가 예정"으로 표시됩니다.',
     itemLabel: (item) => item.nameKo || '새 유통사',
-    newItem: () => ({ id: `petretail-${Date.now()}`, nameKo: '', nameEn: '', logo: '' }),
+    newItem: () => ({ id: `petretail-${Date.now()}`, nameKo: '', nameEn: '', logo: '', logoScale: 1 }),
     fields: [
       { key: 'name', label: '이름', type: 'text' },
-      { key: 'logo', label: '로고', type: 'image', width: 400, height: 200, fit: 'contain' }
+      { key: 'logo', label: '로고', type: 'image', width: 400, height: 200, fit: 'contain', scaleKey: 'logoScale' },
+      { key: 'logoScale', label: '로고 표시 크기', type: 'scale' }
     ]
   },
   businessCards: {

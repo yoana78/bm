@@ -107,12 +107,30 @@ export default function ListEditor({ schema, items, onSave, uploadImage, transla
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <div style={{ width: '120px', aspectRatio: `${field.width} / ${field.height}`, border: '1px solid #E5E7EB', borderRadius: '6px', background: '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
               {src
-                ? <img src={src} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                ? <img src={src} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', transform: `scale(${Number(item[field.scaleKey] ?? 1)})` }} />
                 : <span style={{ fontSize: '0.72rem', color: '#9CA3AF' }}>없음</span>}
             </div>
             <input type="file" accept="image/*" onChange={e => handleUpload(index, field, e.target.files[0])} style={{ fontSize: '0.82rem' }} />
             {busy === `${index}-${field.key}` && <span style={{ fontSize: '0.8rem', color: '#0066B3' }}>올리는 중…</span>}
           </div>
+        </div>
+      );
+    }
+
+    if (field.type === 'scale') {
+      const value = Number(item[field.key] ?? 1);
+      return (
+        <div key={field.key}>
+          <div style={subLabel}>🔍 {field.label} ({value.toFixed(1)}x)</div>
+          <input
+            type="range"
+            min="0.5"
+            max="2.5"
+            step="0.1"
+            value={value}
+            onChange={e => update(index, { [field.key]: Number(e.target.value) })}
+            style={{ width: '100%' }}
+          />
         </div>
       );
     }

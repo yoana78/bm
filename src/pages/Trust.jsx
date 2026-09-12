@@ -386,7 +386,7 @@ export default function Trust() {
                 }}
               >
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                  <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '70px', maxWidth: '100%', objectFit: 'contain' }} />
+                  <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '70px', maxWidth: '100%', objectFit: 'contain', transform: `scale(${Number(p.logoScale) || 1})` }} />
                 </div>
                 <span style={{ fontSize: '0.82rem', color: '#666', marginTop: '4px', fontWeight: 500 }}>
                   {isEn ? p.nameEn : p.nameKo}
@@ -426,7 +426,7 @@ export default function Trust() {
                 {p.logo ? (
                   <>
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                      <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '45px', maxWidth: '90px', objectFit: 'contain' }} />
+                      <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '45px', maxWidth: '90px', objectFit: 'contain', transform: `scale(${Number(p.logoScale) || 1})` }} />
                     </div>
                     <span style={{ fontSize: '0.82rem', color: '#666', marginTop: '4px', fontWeight: 500 }}>
                       {isEn ? p.nameEn : p.nameKo}

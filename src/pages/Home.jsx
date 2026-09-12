@@ -269,7 +269,7 @@ export default function Home() {
           <div className="marquee-track">
             {marqueePartners.map((p, idx) => (
               <div key={`${p.id}-${idx}`} className="marquee-item" title={isEn ? p.nameEn : p.nameKo} style={{ width: '150px', height: '75px', padding: '6px' }}>
-                <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '95%', maxWidth: '95%', objectFit: 'contain', transform: 'scale(1.2)' }} />
+                <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '95%', maxWidth: '95%', objectFit: 'contain', transform: `scale(${1.2 * (Number(p.logoScale) || 1)})` }} />
               </div>
             ))}
           </div>
@@ -301,7 +301,7 @@ export default function Home() {
                 style={{ width: '150px', height: '75px', padding: '6px', borderStyle: p.logo ? 'solid' : 'dashed' }}
               >
                 {p.logo ? (
-                  <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '55%', maxWidth: '80%', objectFit: 'contain' }} />
+                  <img src={p.logo} alt={p.nameKo} style={{ maxHeight: '55%', maxWidth: '80%', objectFit: 'contain', transform: `scale(${Number(p.logoScale) || 1})` }} />
                 ) : (
                   <span style={{ fontSize: '0.66rem', color: '#CBD5E1', fontWeight: 600, textAlign: 'center' }}>
                     {isEn ? 'Coming Soon' : '로고 추가 예정'}
