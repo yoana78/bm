@@ -7,6 +7,7 @@ import { useData } from '../context/DataContext';
 import { useLanguage } from '../i18n/LanguageContext';
 import PageContentEditor from './PageContentEditor';
 import { EXPO_PHOTO_SIZE } from '../content/expoData';
+import { LIST_DEFAULTS } from '../content/siteLists';
 
 const ADMIN_TOKEN_KEY = 'boomyung_admin_token';
 
@@ -63,7 +64,7 @@ function compressImage(file, { maxDimension = 1600, startQuality = 0.85, maxBase
 // 페이지에 들어가는 이미지는 자리마다 노출 규격(가로:세로 비율)이 정해져 있다.
 // 다른 비율의 사진을 올리면 레이아웃이 깨지므로, 가운데를 기준으로 잘라내(center crop)
 // 규격 비율에 맞춘 뒤 권장 해상도까지만 줄여서 저장한다.
-function cropImageToBox(file, targetWidth, targetHeight, { maxBase64Length = 850000 } = {}) {
+function cropImageToBox(file, targetWidth, targetHeight, { maxBase64Length = 850000, mode = 'cover' } = {}) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
@@ -73,18 +74,21 @@ function cropImageToBox(file, targetWidth, targetHeight, { maxBase64Length = 850
       const targetRatio = targetWidth / targetHeight;
       const sourceRatio = img.width / img.height;
 
-      // 원본에서 잘라낼 영역 — 비율이 남는 쪽(가로가 넓으면 좌우, 세로가 길면 위아래)을 잘라낸다
+      // cover: 비율이 남는 쪽(가로가 넓으면 좌우, 세로가 길면 위아래)을 잘라내 규격을 꽉 채운다.
+      // contain: 로고처럼 잘리면 안 되는 이미지는 자르지 않고 전체를 넣고 남는 부분을 여백으로 둔다.
       let sx = 0, sy = 0, sw = img.width, sh = img.height;
-      if (sourceRatio > targetRatio) {
-        sw = Math.round(img.height * targetRatio);
-        sx = Math.round((img.width - sw) / 2);
-      } else if (sourceRatio < targetRatio) {
-        sh = Math.round(img.width / targetRatio);
-        sy = Math.round((img.height - sh) / 2);
+      if (mode === 'cover') {
+        if (sourceRatio > targetRatio) {
+          sw = Math.round(img.height * targetRatio);
+          sx = Math.round((img.width - sw) / 2);
+        } else if (sourceRatio < targetRatio) {
+          sh = Math.round(img.width / targetRatio);
+          sy = Math.round((img.height - sh) / 2);
+        }
       }
 
       // 원본이 권장 해상도보다 작으면 억지로 늘리지 않는다 (확대하면 흐려지기만 함)
-      let outW = Math.min(targetWidth, sw);
+      let outW = mode === 'cover' ? Math.min(targetWidth, sw) : targetWidth;
       let outH = Math.round(outW / targetRatio);
 
       const canvas = document.createElement('canvas');
@@ -99,7 +103,14 @@ function cropImageToBox(file, targetWidth, targetHeight, { maxBase64Length = 850
           ctx.fillStyle = '#FFFFFF';
           ctx.fillRect(0, 0, outW, outH);
         }
-        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+        if (mode === 'cover') {
+          ctx.drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+        } else {
+          const scale = Math.min(outW / sw, outH / sh);
+          const dw = Math.round(sw * scale);
+          const dh = Math.round(sh * scale);
+          ctx.drawImage(img, sx, sy, sw, sh, Math.round((outW - dw) / 2), Math.round((outH - dh) / 2), dw, dh);
+        }
       };
 
       draw();
@@ -269,6 +280,12 @@ export default function Admin() {
     }
     const dataUrl = await cropImageToBox(file, field.width, field.height);
     return { src: await uploadImage(dataUrl), kind: 'image' };
+  };
+
+  // 목록형 데이터(로고·명함)의 이미지 업로드 — 자리별 규격에 맞춰 자동 크롭
+  const handleUploadListImage = async (file, width, height, mode = 'cover') => {
+    const dataUrl = await cropImageToBox(file, width, height, { mode });
+    return uploadImage(dataUrl);
   };
 
   // 박람회 갤러리 사진 업로드 — 타일 규격에 맞춰 가운데를 기준으로 잘라낸다
@@ -1496,6 +1513,9 @@ export default function Admin() {
               expoYears={siteSettings.expoYears || []}
               onSaveExpoYears={(expoYears) => updateSiteSettings({ expoYears })}
               uploadExpoPhoto={handleUploadExpoPhoto}
+              siteLists={{ ...LIST_DEFAULTS, ...(siteSettings.siteLists || {}) }}
+              onSaveList={(key, items) => updateSiteSettings({ siteLists: { ...(siteSettings.siteLists || {}), [key]: items } })}
+              uploadListImage={handleUploadListImage}
             />
           )}
 

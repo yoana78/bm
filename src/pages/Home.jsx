@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
-import { partners } from '../data/partners';
-import { petRetailPartners } from '../data/petRetailPartners';
+import { useSiteList } from '../content/siteLists';
 import { usePageContent } from '../content/usePageContent';
 
 export default function Home() {
@@ -14,6 +13,8 @@ export default function Home() {
   const isEn = lang === 'en';
   const { siteSettings, brands } = useData(); // 관리자 페이지 "사이트 설정" 탭에서 등록한 히어로 이미지 목록/비전 섹션 배경 이미지, 브랜드 목록
   const { txt, img } = usePageContent('home'); // 관리자 페이지 "페이지 문구·이미지" 탭에서 고칠 수 있는 문구/사진
+  const partners = useSiteList('partners'); // 관리자 페이지에서 수정할 수 있는 유통 파트너 로고 목록
+  const petRetailPartners = useSiteList('petRetailPartners');
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 보여지는 히어로 슬라이드 번호
 
   // 히어로 슬라이드는 전부 같은 문구를 공유하고 사진만 다름 — 관리자가 등록한 이미지 목록(siteSettings.heroImages)으로

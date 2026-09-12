@@ -4,6 +4,8 @@
 import React, { useState } from 'react';
 import { PAGE_SCHEMA } from '../content/pageDefaults';
 import ExpoYearEditor from './ExpoYearEditor';
+import ListEditor from './ListEditor';
+import { LIST_SCHEMA } from '../content/siteLists';
 
 export default function PageContentEditor({
   isEn,
@@ -13,7 +15,10 @@ export default function PageContentEditor({
   translateText,        // (한글) => Promise<영문>
   expoYears,            // 관리자가 추가한 박람회 연도 목록
   onSaveExpoYears,      // (연도 목록) => Promise
-  uploadExpoPhoto       // (file) => Promise<이미지 주소>
+  uploadExpoPhoto,      // (file) => Promise<이미지 주소>
+  siteLists,            // 목록형 데이터(연혁/로고/명함)의 현재 값
+  onSaveList,           // (목록이름, 목록) => Promise
+  uploadListImage       // (file, width, height) => Promise<이미지 주소>
 }) {
   const pageKeys = Object.keys(PAGE_SCHEMA);
   const [activePage, setActivePage] = useState(pageKeys[0]);
@@ -147,6 +152,20 @@ export default function PageContentEditor({
           translateText={translateText}
         />
       )}
+
+      {/* 이 페이지에 속한 목록형 데이터(연혁 / 로고 / 명함) 편집기 */}
+      {Object.entries(LIST_SCHEMA)
+        .filter(([, listSchema]) => listSchema.page === activePage)
+        .map(([listKey, listSchema]) => (
+          <ListEditor
+            key={listKey}
+            schema={listSchema}
+            items={siteLists[listKey]}
+            onSave={(items) => onSaveList(listKey, items)}
+            uploadImage={uploadListImage}
+            translateText={translateText}
+          />
+        ))}
 
       {page.sections.map(section => (
         <div key={section.label} style={{ marginBottom: '30px', border: '1px solid #E5E7EB', borderRadius: '10px', overflow: 'hidden' }}>

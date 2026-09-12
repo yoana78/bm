@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
 import { usePageContent } from '../content/usePageContent';
+import { useSiteList } from '../content/siteLists';
 import HeroMedia from '../components/HeroMedia';
 
 const WEB3FORMS_ACCESS_KEY = '8207939c-fd68-4c59-ae20-62ea022b6952';
@@ -16,6 +17,7 @@ export default function Contact() {
   const isEn = lang === 'en';
   const { brands, siteSettings } = useData();
   const { txt, media } = usePageContent('contact'); // 관리자 페이지에서 고칠 수 있는 문구/사진
+  const businessCards = useSiteList('businessCards'); // 관리자 페이지에서 수정할 수 있는 명함 목록
 
   // 문의 폼 입력값 상태
   const [formData, setFormData] = useState({
@@ -84,27 +86,6 @@ export default function Contact() {
     }
   };
 
-  // 영업 담당자 명함 카드 데이터 (팀1/팀2)
-  const businessCards = [
-    {
-      id: 'team1',
-      titleKo: '영업1팀 담당자 명함',
-      titleEn: 'Sales Team 1 Representative',
-      imgKr: './assets/business_cards/team2_kr.png',
-      imgEn: './assets/business_cards/team2_en.png',
-      descKo: '국내 대형마트, 편의점 및 이커머스 입점 전문 담당자',
-      descEn: 'Domestic Retail & E-Commerce Account Executive'
-    },
-    {
-      id: 'team2',
-      titleKo: '영업2팀 담당자 명함',
-      titleEn: 'Sales Team 2 Representative',
-      imgKr: './assets/business_cards/team1_kr.png',
-      imgEn: './assets/business_cards/team1_en.png',
-      descKo: '해외 수출, OEM/ODM 및 글로벌 유통 전문 담당자',
-      descEn: 'Global Export & OEM/ODM Account Executive'
-    }
-  ];
 
   return (
     <div className="daesang-sub-page">

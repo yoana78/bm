@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
-import { privacyPolicyKo, privacyPolicyEn } from '../data/privacyPolicy';
-import { termsOfServiceKo, termsOfServiceEn } from '../data/termsOfService';
+import { usePageContent } from '../content/usePageContent';
 
 export default function Footer() {
   const { lang } = useLanguage();
+  const { txt } = usePageContent('legal'); // 관리자 페이지에서 고칠 수 있는 약관 전문
   const isEn = lang === 'en';
   // 개인정보처리방침 / 이용약관 팝업(모달) 표시 여부
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
@@ -94,10 +94,10 @@ export default function Footer() {
           >
             <button className="modal-close-btn" onClick={() => setShowPrivacyModal(false)}>&times;</button>
             <h2 style={{ marginTop: 0, marginBottom: '20px', color: 'var(--dh-navy)' }}>
-              {isEn ? 'Privacy Policy' : '개인정보처리방침'}
+              {txt('privacyTitle')}
             </h2>
             <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontFamily: 'inherit', fontSize: '0.85rem', lineHeight: 1.7, color: '#374151', margin: 0 }}>
-              {isEn ? privacyPolicyEn : privacyPolicyKo}
+              {txt('privacyBody')}
             </pre>
           </div>
         </div>
@@ -113,10 +113,10 @@ export default function Footer() {
           >
             <button className="modal-close-btn" onClick={() => setShowTermsModal(false)}>&times;</button>
             <h2 style={{ marginTop: 0, marginBottom: '20px', color: 'var(--dh-navy)' }}>
-              {isEn ? 'Terms of Service' : '이용약관'}
+              {txt('termsTitle')}
             </h2>
             <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontFamily: 'inherit', fontSize: '0.85rem', lineHeight: 1.7, color: '#374151', margin: 0 }}>
-              {isEn ? termsOfServiceEn : termsOfServiceKo}
+              {txt('termsBody')}
             </pre>
           </div>
         </div>

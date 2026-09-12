@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
-import { partners } from '../data/partners';
-import { petRetailPartners } from '../data/petRetailPartners';
+import { useSiteList } from '../content/siteLists';
 import { buildExpoData } from '../content/expoData';
 import { usePageContent } from '../content/usePageContent';
 import HeroMedia from '../components/HeroMedia';
@@ -14,6 +13,8 @@ export default function Trust() {
   const isEn = lang === 'en';
   const { siteSettings } = useData();
   const { txt, media } = usePageContent('trust'); // 관리자 페이지에서 고칠 수 있는 배너/섹션 문구
+  const partners = useSiteList('partners'); // 관리자 페이지에서 수정할 수 있는 유통 파트너 로고 목록
+  const petRetailPartners = useSiteList('petRetailPartners');
 
   // 기존 연도 + 관리자 페이지에서 추가한 연도를 합친 박람회 사진 목록
   const { photos: expoPhotos, meta: expoYearMeta } = buildExpoData(siteSettings.expoYears);
