@@ -2,6 +2,15 @@
 // CEO 인사말, 연혁, 생산/R&D 인프라, CI(로고) 소개를 순서대로 보여줍니다.
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { usePageContent } from '../content/usePageContent';
+
+// 관리자가 빈 줄을 넣어 나눈 문단을 각각 분리한다 (문단 사이 여백을 유지하기 위함)
+function splitParagraphs(text) {
+  return String(text || '')
+    .split(/\n\s*\n/)
+    .map(p => p.trim())
+    .filter(Boolean);
+}
 
 // 인프라 섹션의 "웰젠" 카드를 클릭하면 뜨는 갤러리 이미지들
 const wellzenImages = [
@@ -26,6 +35,7 @@ const qingdaoImages = [
 export default function About() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
+  const { txt, img } = usePageContent('about'); // 관리자 페이지에서 고칠 수 있는 문구/사진
   const [galleryImages, setGalleryImages] = useState(null); // 현재 팝업으로 보여줄 갤러리 이미지 목록 (없으면 null)
   const [galleryIndex, setGalleryIndex] = useState(0); // 갤러리 팝업에서 현재 크게 보여지는 이미지의 인덱스
   const closeGallery = () => setGalleryImages(null);
@@ -110,17 +120,15 @@ export default function About() {
       <section
         className="daesang-sub-hero"
         style={{
-          background: "linear-gradient(rgba(10,37,64,0.55), rgba(10,37,64,0.55)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2560&q=80') center/cover no-repeat #0A2540"
+          background: `linear-gradient(rgba(10,37,64,0.55), rgba(10,37,64,0.55)), url('${img('heroImage')}') center/cover no-repeat #0A2540`
         }}
       >
         <div className="daesang-section-overlay"></div>
         <div className="daesang-sub-hero-content">
-          <span className="daesang-poetic-sub">CORPORATE OVERVIEW &amp; CI</span>
-          <h1>{isEn ? 'About Us' : '회사소개'}</h1>
-          <p>
-            {isEn
-              ? 'Opening a happy tomorrow for pets and pet owners based on honest technology and trust accumulated over 30 years.'
-              : '30년이상 축적된 정직한 기술과 신뢰를 바탕으로 반려동물과 반려인의 행복한 내일을 열어갑니다.'}
+          <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+          <h1 className="cms-text">{txt('heroTitle')}</h1>
+          <p className="cms-text">
+            {txt('heroBody')}
           </p>
         </div>
       </section>
@@ -130,50 +138,41 @@ export default function About() {
         <div className="daesang-container-wide">
           <div className="daesang-sub-split">
             <div className="daesang-sub-left">
-              <span className="daesang-brand-num">CEO MESSAGE</span>
-              <h2>{isEn ? 'Dreaming of a happy world together with pets' : '반려동물과 함께 행복한 세상을 꿈꿉니다'}</h2>
+              <span className="daesang-brand-num">{txt('ceoEyebrow')}</span>
+              <h2 className="cms-text">{txt('ceoHeading')}</h2>
               <div style={{ marginTop: '20px', padding: '16px', background: '#F8FAFC', borderRadius: '8px', borderLeft: '4px solid var(--dh-blue)' }}>
-                <p style={{ fontWeight: '700', fontSize: '0.92rem', color: 'var(--dh-navy)' }}>
-                  {isEn ? 'Seong-hoon Jeong, CEO' : '정성훈 대표이사'}
+                <p className="cms-text" style={{ fontWeight: '700', fontSize: '0.92rem', color: 'var(--dh-navy)' }}>
+                  {txt('ceoName')}
                 </p>
-                <p style={{ fontSize: '0.78rem', color: 'var(--dh-text-muted)', marginTop: '2px' }}>
-                  {isEn ? '(주)BOOMYOUNG CO., LTD.' : '(주)부명 대표이사'}
+                <p className="cms-text" style={{ fontSize: '0.78rem', color: 'var(--dh-text-muted)', marginTop: '2px' }}>
+                  {txt('ceoCompany')}
                 </p>
               </div>
             </div>
             <div className="daesang-sub-right">
-              <p className="daesang-lead-text">
-                {isEn
-                  ? 'Hello, I am Seong-hoon Jeong, CEO of BOOMYOUNG CO., LTD.'
-                  : '안녕하십니까. 부명(BOOMYOUNG CO., LTD.) 대표이사 정성훈입니다.'}
+              <p className="daesang-lead-text cms-text">
+                {txt('ceoLead')}
               </p>
-              <p style={{ marginBottom: '14px' }}>
-                {isEn
-                  ? 'Under the goal of providing better products and services to both pets and pet owners, BOOMYOUNG operates across product planning, development, distribution, and logistics, centered around pet supplies.'
-                  : '부명은 반려동물과 반려인 모두에게 더 나은 제품과 서비스를 제공한다는 목표 아래 반려동물용품을 중심으로 상품 기획, 개발, 유통 및 물류 전반의 사업을 운영하고 있습니다.'}
-              </p>
-              <p style={{ marginBottom: '14px' }}>
-                {isEn
-                  ? 'We closely analyze fast-changing pet market trends and consumer demands to introduce practical and high-quality products, maintaining sustainable growth built on stable partnerships with major domestic distribution channels.'
-                  : '빠르게 변화하는 반려동물 시장의 트렌드와 소비자의 요구를 면밀히 분석하여 실용성과 품질을 갖춘 제품을 선보이고, 국내 주요 유통채널과의 안정적인 협력관계를 바탕으로 지속적인 성장을 이어가고 있습니다.'}
-              </p>
-              <p style={{ marginBottom: '14px', position: 'relative' }}>
-                {isEn
-                  ? 'Going forward, we will pursue management that satisfies both stores and customers based on trust, strengthening market leadership through solid planning and high-quality manufacturing capabilities. Thank you.'
-                  : '앞으로도 신뢰를 바탕으로 하는 매장과 고객 모두가 만족할 수 있는 경영을 지향하며, 알찬 기획과 고품질 제조 역량으로 시장 지배력을 강화하고 가치 있는 미래를 만들어 가겠습니다. 감사합니다.'}
-                <img
-                  src="./assets/ceo_signature.png"
-                  alt={isEn ? 'CEO Signature' : '대표이사 서명'}
-                  style={{
-                    position: 'absolute',
-                    height: '60px',
-                    objectFit: 'contain',
-                    right: isEn ? '-10px' : '-18px',
-                    bottom: '-22px',
-                    pointerEvents: 'none'
-                  }}
-                />
-              </p>
+              {/* 빈 줄로 나뉜 문단을 각각 <p>로 렌더링해 문단 간격을 유지하고, 서명은 마지막 문단에 붙인다 */}
+              {splitParagraphs(txt('ceoBody')).map((para, idx, all) => (
+                <p key={idx} className="cms-text" style={{ marginBottom: '14px', position: idx === all.length - 1 ? 'relative' : undefined }}>
+                  {para}
+                  {idx === all.length - 1 && (
+                    <img
+                      src={img('ceoSignature')}
+                      alt={isEn ? 'CEO Signature' : '대표이사 서명'}
+                      style={{
+                        position: 'absolute',
+                        height: '60px',
+                        objectFit: 'contain',
+                        right: isEn ? '-10px' : '-18px',
+                        bottom: '-22px',
+                        pointerEvents: 'none'
+                      }}
+                    />
+                  )}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -183,7 +182,7 @@ export default function About() {
       <section className="daesang-gray-section">
         <div className="daesang-container-wide">
           <h2 className="daesang-section-h2">
-            {isEn ? 'Company History' : '기업 연혁'}
+            {txt('historyTitle')}
           </h2>
           <div className="daesang-timeline">
             {historyItems.map((item, index) => {
@@ -214,7 +213,7 @@ export default function About() {
       <section className="daesang-white-section">
         <div className="daesang-container-wide">
           <h2 className="daesang-section-h2">
-            {isEn ? 'Infrastructure' : '생산 및 R&D 인프라'}
+            {txt('infraTitle')}
           </h2>
           <div className="daesang-trust-grid">
             <div className="daesang-trust-card" onClick={() => { setGalleryImages(homadImages); setGalleryIndex(0); }} style={{ cursor: 'pointer' }}>
@@ -280,7 +279,7 @@ export default function About() {
       <section className="daesang-white-section">
         <div className="daesang-container-wide">
           <h2 className="daesang-section-h2">
-            {isEn ? 'Corporate Identity' : 'CI 소개'}
+            {txt('ciTitle')}
           </h2>
           
           <div className="ci-section-grid" style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '32px', alignItems: 'stretch' }}>

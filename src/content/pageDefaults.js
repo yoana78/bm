@@ -22,7 +22,7 @@ export const PAGE_SCHEMA = {
         fields: [
           { key: 'heroEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.85rem', koOnly: true, ko: 'Respect for Pet Life' },
           { key: 'heroTitle', label: '큰 제목', type: 'textarea', size: '2.1rem', ko: '존중은 아주 작고 사소한 것에서부터 시작됩니다', en: 'Respect begins with small and thoughtful care.' },
-          { key: 'heroBody', label: '본문', type: 'textarea', size: '1rem', ko: '(주)부명은 반려동물의 생명과 건강을 존중하는 정직한 품질로 펫 헬스케어의 미래를 열어갑니다.', en: '(주)BOOMYUNG creates a healthier future for pets through honest quality that respects life and well-being.' },
+          { key: 'heroBody', label: '본문', type: 'textarea', size: '1rem', ko: '(주)부명은 반려동물의 생명과 건강을 존중하는 정직한 품질로 펫 헬스케어의 미래를 열어갑니다.', en: '(주)BOOMYUNG creates a healthier future for pets through uncompromised quality and transparent craftsmanship.' },
           { key: 'heroButton', label: '버튼 문구', type: 'text', size: '0.85rem', ko: '기업 소개 자세히 보기', en: 'MORE ABOUT BOOMYUNG' },
         ],
       },
@@ -32,7 +32,7 @@ export const PAGE_SCHEMA = {
         fields: [
           { key: 'visionEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.85rem', koOnly: true, ko: 'Scientific Precision & Nature' },
           { key: 'visionTitle', label: '큰 제목', type: 'textarea', size: '2.1rem', ko: '영양과 기술, 그리고 신뢰로 빚어낸 품질', en: 'Crafted with precision, delivered with unwavering trust.' },
-          { key: 'visionBody', label: '본문', type: 'textarea', size: '1rem', ko: '자연과 함께 숨 쉬는 강아지와 고양이를 위해 정직한 연구와 철저한 위생 관리를 실천합니다.', en: 'For the dogs and cats who breathe alongside nature, we practice honest research and rigorous hygiene control.' },
+          { key: 'visionBody', label: '본문', type: 'textarea', size: '1rem', ko: '자연과 함께 숨 쉬는 강아지와 고양이를 위해 정직한 연구와 철저한 위생 관리를 실천합니다.', en: 'Providing healthier food, treats, and care products for cats and dogs in harmony with nature.' },
           { key: 'visionButton', label: '버튼 문구', type: 'text', size: '0.85rem', ko: '브랜드 포트폴리오', en: 'EXPLORE BRANDS' },
         ],
       },
@@ -50,7 +50,7 @@ export const PAGE_SCHEMA = {
         fields: [
           { key: 'retailEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.78rem', koOnly: true, ko: 'Trusted by Major Retail Networks' },
           { key: 'retailTitle', label: '섹션 제목', type: 'textarea', size: '1.25rem', ko: '부명과 함께하는 국내 대형 유통 파트너', en: 'Domestic Retail Partners' },
-          { key: 'retailBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '이마트, 홈플러스, 코스트코, 쿠팡, 편의점 4사 등 국내 13개 이상 유통 채널에 검증된 제품을 공급합니다.', en: 'We supply verified products to over 13 domestic retail channels including E-Mart, Homeplus, Costco, Coupang and the four major convenience store chains.' },
+          { key: 'retailBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '이마트, 홈플러스, 코스트코, 쿠팡, 편의점 4사 등 국내 13개 이상 유통 채널에 검증된 제품을 공급합니다.', en: 'Supplying premium pet products to over 13 major hypermarkets, marts, and online channels in Korea.' },
         ],
       },
       {
@@ -58,7 +58,7 @@ export const PAGE_SCHEMA = {
         fields: [
           { key: 'petRetailEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.78rem', koOnly: true, ko: 'Trusted by Pet Specialty Distributors' },
           { key: 'petRetailTitle', label: '섹션 제목', type: 'textarea', size: '1.25rem', ko: '부명과 함께 하는 국내 펫 전문 유통사', en: 'Domestic Pet Specialty Distributors' },
-          { key: 'petRetailBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.', en: 'We supply verified products to major domestic pet distribution channels including Sunjin Pet, Ggogio, Yaongameongmeong, and The Kico.' },
+          { key: 'petRetailBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.', en: 'Supplying verified products to major domestic pet specialty distribution channels including THEKICO, SUJINPET, Dog & Cat Paradise, and WellPet Company.' },
         ],
       },
       {
@@ -67,7 +67,7 @@ export const PAGE_SCHEMA = {
           { key: 'globalImage', label: '배경 사진', type: 'image', width: 2560, height: 1440, src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2560&q=80' },
           { key: 'globalEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.85rem', koOnly: true, ko: 'Global Partnership & Export' },
           { key: 'globalTitle', label: '큰 제목', type: 'textarea', size: '2.1rem', ko: '국내 대형 유통망을 넘어 세계 시장으로', en: 'Connecting domestic retail and global export markets.' },
-          { key: 'globalBody', label: '본문', type: 'textarea', size: '1rem', ko: '대형 할인마트, 이커머스 및 글로벌 수출 네트워크를 기반으로 국내외 B2B 비즈니스 파트너십을 확장해 나갑니다.', en: 'Building on hypermarkets, e-commerce and a global export network, we continue to expand B2B partnerships at home and abroad.' },
+          { key: 'globalBody', label: '본문', type: 'textarea', size: '1rem', ko: '대형 할인마트, 이커머스 및 글로벌 수출 네트워크를 기반으로 국내외 B2B 비즈니스 파트너십을 확장해 나갑니다.', en: 'Collaborating with leading retail partners and international buyers to deliver excellence worldwide.' },
           { key: 'globalButton', label: '버튼 문구', type: 'text', size: '0.85rem', ko: 'B2B 입점 및 수출 문의', en: 'INQUIRE B2B PARTNERSHIP' },
         ],
       },
@@ -83,7 +83,7 @@ export const PAGE_SCHEMA = {
           { key: 'heroImage', label: '배경 사진', type: 'image', width: 2560, height: 1440, src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2560&q=80' },
           { key: 'heroEyebrow', label: '작은 영문 라벨', type: 'text', size: '0.85rem', koOnly: true, ko: 'CORPORATE OVERVIEW & CI' },
           { key: 'heroTitle', label: '페이지 제목', type: 'text', size: '1.3rem', ko: '회사소개', en: 'About Us' },
-          { key: 'heroBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '30년이상 축적된 정직한 기술과 신뢰를 바탕으로 반려동물과 반려인의 행복한 내일을 열어갑니다.', en: 'Built on 30+ years of honest technology and trust, we are opening a happier tomorrow for pets and their families.' },
+          { key: 'heroBody', label: '본문', type: 'textarea', size: '0.82rem', ko: '30년이상 축적된 정직한 기술과 신뢰를 바탕으로 반려동물과 반려인의 행복한 내일을 열어갑니다.', en: 'Opening a happy tomorrow for pets and pet owners based on honest technology and trust accumulated over 30 years.' },
         ],
       },
       {
@@ -94,8 +94,8 @@ export const PAGE_SCHEMA = {
           { key: 'ceoName', label: '대표 이름', type: 'text', size: '0.92rem', ko: '정성훈 대표이사', en: 'Seong-hoon Jeong, CEO' },
           { key: 'ceoCompany', label: '대표 직함/회사', type: 'text', size: '0.78rem', ko: '(주)부명 대표이사', en: '(주)BOOMYOUNG CO., LTD.' },
           { key: 'ceoSignature', label: '대표 서명 이미지', type: 'image', width: 600, height: 180, src: './assets/ceo_signature.png' },
-          { key: 'ceoLead', label: '인사말 첫 문장 (손글씨체)', type: 'textarea', size: '1.35rem', ko: '안녕하십니까. 부명(BOOMYOUNG CO., LTD.) 대표이사 정성훈입니다.', en: 'Hello. I am Seong-hoon Jeong, CEO of BOOMYOUNG CO., LTD.' },
-          { key: 'ceoBody', label: '인사말 본문 (손글씨체)', type: 'textarea', size: '1.35rem', ko: '부명은 반려동물과 반려인 모두에게 더 나은 제품과 서비스를 제공한다는 목표 아래 반려동물용품을 중심으로 상품 기획, 개발, 유통 및 물류 사업을 전개하고 있습니다.\n\n빠르게 변화하는 반려동물 시장의 트렌드와 소비자의 요구를 면밀히 분석하여 실용성과 품질을 갖춘 제품을 선보이고, 국내 주요 유통채널과의 안정적인 파트너십을 바탕으로 신뢰받는 기업으로 성장해 왔습니다.\n\n앞으로도 신뢰를 바탕으로 하는 매장과 고객 모두가 만족할 수 있는 경영을 지향하며, 알찬 기획과 고품질 제조 역량으로 시장 지배력을 넓혀가겠습니다.', en: 'BOOMYUNG plans, develops, distributes and delivers pet products with one goal: better products and service for pets and the people who love them.\n\nBy closely analysing a fast-moving market and the needs of its consumers, we bring practical, high-quality products to market, and we have grown into a trusted company on the strength of stable partnerships with Korea’s major retail channels.\n\nWe will continue to pursue management that satisfies both our retail partners and their customers, widening our presence through sound planning and high-quality manufacturing.' },
+          { key: 'ceoLead', label: '인사말 첫 문장 (손글씨체)', type: 'textarea', size: '1.35rem', ko: '안녕하십니까. 부명(BOOMYOUNG CO., LTD.) 대표이사 정성훈입니다.', en: 'Hello, I am Seong-hoon Jeong, CEO of BOOMYOUNG CO., LTD.' },
+          { key: 'ceoBody', label: '인사말 본문 (손글씨체) — 빈 줄로 문단을 나눕니다', type: 'textarea', size: '1.35rem', ko: '부명은 반려동물과 반려인 모두에게 더 나은 제품과 서비스를 제공한다는 목표 아래 반려동물용품을 중심으로 상품 기획, 개발, 유통 및 물류 전반의 사업을 운영하고 있습니다.\n\n빠르게 변화하는 반려동물 시장의 트렌드와 소비자의 요구를 면밀히 분석하여 실용성과 품질을 갖춘 제품을 선보이고, 국내 주요 유통채널과의 안정적인 협력관계를 바탕으로 지속적인 성장을 이어가고 있습니다.\n\n앞으로도 신뢰를 바탕으로 하는 매장과 고객 모두가 만족할 수 있는 경영을 지향하며, 알찬 기획과 고품질 제조 역량으로 시장 지배력을 강화하고 가치 있는 미래를 만들어 가겠습니다. 감사합니다.', en: 'Under the goal of providing better products and services to both pets and pet owners, BOOMYOUNG operates across product planning, development, distribution, and logistics, centered around pet supplies.\n\nWe closely analyze fast-changing pet market trends and consumer demands to introduce practical and high-quality products, maintaining sustainable growth built on stable partnerships with major domestic distribution channels.\n\nGoing forward, we will pursue management that satisfies both stores and customers based on trust, strengthening market leadership through solid planning and high-quality manufacturing capabilities. Thank you.' },
         ],
       },
       {
@@ -142,7 +142,7 @@ export const PAGE_SCHEMA = {
           { key: 'networkEyebrow', label: '대형 유통 - 작은 영문 라벨', type: 'text', size: '0.72rem', koOnly: true, ko: 'PARTNERSHIP' },
           { key: 'networkTitle', label: '대형 유통 - 섹션 제목', type: 'text', size: '1.15rem', ko: '신뢰로 인정받은 국내 대형 유통 네트워크', en: 'Domestic Distribution Network' },
           { key: 'petRetailTitle', label: '펫 전문 유통사 - 섹션 제목', type: 'text', size: '1.15rem', ko: '부명과 함께 하는 국내 펫 전문 유통사', en: 'Domestic Pet Specialty Distributors' },
-          { key: 'petRetailBody', label: '펫 전문 유통사 - 본문', type: 'textarea', size: '0.85rem', ko: '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.', en: 'We supply verified products to major domestic pet distribution channels including Sunjin Pet, Ggogio, Yaongameongmeong, and The Kico.' },
+          { key: 'petRetailBody', label: '펫 전문 유통사 - 본문', type: 'textarea', size: '0.85rem', ko: '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.', en: 'Supplying verified products to major domestic pet specialty distribution channels including THEKICO, SUJINPET, Dog & Cat Paradise, and WellPet Company.' },
         ],
       },
     ],

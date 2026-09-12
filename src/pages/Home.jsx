@@ -7,26 +7,18 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
 import { partners } from '../data/partners';
 import { petRetailPartners } from '../data/petRetailPartners';
+import { usePageContent } from '../content/usePageContent';
 
 export default function Home() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const { siteSettings, brands } = useData(); // 관리자 페이지 "사이트 설정" 탭에서 등록한 히어로 이미지 목록/비전 섹션 배경 이미지, 브랜드 목록
+  const { txt, img } = usePageContent('home'); // 관리자 페이지 "페이지 문구·이미지" 탭에서 고칠 수 있는 문구/사진
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 보여지는 히어로 슬라이드 번호
 
-  // 히어로 슬라이드 5장은 전부 같은 문구를 공유하고 사진만 다름 — 관리자가 등록한 이미지 목록(siteSettings.heroImages)으로
+  // 히어로 슬라이드는 전부 같은 문구를 공유하고 사진만 다름 — 관리자가 등록한 이미지 목록(siteSettings.heroImages)으로
   // 이 공통 문구를 감싸서 슬라이드 배열을 만든다. 이미지 추가/삭제는 관리자 페이지에서만 가능.
-  const heroSlides = siteSettings.heroImages.map((image) => ({
-    subTitle: "Respect for Pet Life",
-    titleKo: "존중은 아주 작고 사소한 것에서부터 시작됩니다",
-    titleEn: "Respect begins with small and thoughtful care.",
-    descKo: "(주)부명은 반려동물의 생명과 건강을 존중하는 정직한 품질로 펫 헬스케어의 미래를 열어갑니다.",
-    descEn: "(주)BOOMYUNG creates a healthier future for pets through uncompromised quality and transparent craftsmanship.",
-    link: "/about",
-    linkTextKo: "기업 소개 자세히 보기",
-    linkTextEn: "MORE ABOUT BOOMYUNG",
-    image
-  }));
+  const heroSlides = siteSettings.heroImages.map((image) => ({ image }));
 
   // 히어로 슬라이드 자동 전환 타이머 (5초마다 다음 슬라이드로) - 관리자가 이미지를 전부 지운 경우(0장)에는 실행하지 않음
   useEffect(() => {
@@ -76,15 +68,15 @@ export default function Home() {
           >
             <div className="daesang-section-overlay" style={{ background: 'rgba(0,0,0,0.35)' }}></div>
             <div className="daesang-section-content" style={{ position: 'relative', zIndex: 3 }}>
-              <span className="daesang-poetic-sub">{slide.subTitle}</span>
-              <h1 className="daesang-poetic-title">
-                {isEn ? slide.titleEn : slide.titleKo}
+              <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+              <h1 className="daesang-poetic-title cms-text">
+                {txt('heroTitle')}
               </h1>
-              <p className="daesang-poetic-desc">
-                {isEn ? slide.descEn : slide.descKo}
+              <p className="daesang-poetic-desc cms-text">
+                {txt('heroBody')}
               </p>
-              <Link to={slide.link} className="daesang-btn-minimal">
-                {isEn ? slide.linkTextEn : slide.linkTextKo}
+              <Link to="/about" className="daesang-btn-minimal">
+                {txt('heroButton')}
               </Link>
             </div>
           </div>
@@ -204,19 +196,15 @@ export default function Home() {
           pointerEvents: 'none'
         }} />
         <div className="daesang-section-content" style={{ position: 'relative', zIndex: 3 }}>
-          <span className="daesang-poetic-sub">Scientific Precision & Nature</span>
-          <h2 className="daesang-poetic-title">
-            {isEn 
-              ? "Crafted with precision, delivered with unwavering trust." 
-              : "영양과 기술, 그리고 신뢰로 빚어낸 품질"}
+          <span className="daesang-poetic-sub">{txt('visionEyebrow')}</span>
+          <h2 className="daesang-poetic-title cms-text">
+            {txt('visionTitle')}
           </h2>
-          <p className="daesang-poetic-desc">
-            {isEn
-              ? "Providing healthier food, treats, and care products for cats and dogs in harmony with nature."
-              : "자연과 함께 숨 쉬는 강아지와 고양이를 위해 정직한 연구와 철저한 위생 관리를 실천합니다."}
+          <p className="daesang-poetic-desc cms-text">
+            {txt('visionBody')}
           </p>
           <Link to="/brands" className="daesang-btn-minimal">
-            {isEn ? 'EXPLORE BRANDS' : '브랜드 포트폴리오'}
+            {txt('visionButton')}
           </Link>
         </div>
       </section>
@@ -226,15 +214,13 @@ export default function Home() {
         <div className="daesang-container-wide">
           <div style={{ marginBottom: '28px' }}>
             <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--dh-blue)', letterSpacing: '0.08em', display: 'block', marginBottom: '6px', textTransform: 'uppercase' }}>
-              Specialized Portfolios
+              {txt('lineupEyebrow')}
             </span>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', marginBottom: '8px', wordBreak: 'keep-all' }}>
-              {isEn ? 'Core Brand Lineup' : '부명이 만들어가는 대표 브랜드 라인업'}
+            <h2 className="cms-text" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', marginBottom: '8px', wordBreak: 'keep-all' }}>
+              {txt('lineupTitle')}
             </h2>
-            <p style={{ color: 'var(--dh-text-muted)', fontSize: '0.85rem', lineHeight: '1.5', wordBreak: 'keep-all' }}>
-              {isEn
-                ? 'Introducing the flagship products for each brand.'
-                : '각 브랜드별 대표 상품을 소개합니다.'}
+            <p className="cms-text" style={{ color: 'var(--dh-text-muted)', fontSize: '0.85rem', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+              {txt('lineupBody')}
             </p>
           </div>
 
@@ -267,15 +253,13 @@ export default function Home() {
       <section style={{ background: '#FFFFFF', padding: '50px 0', borderTop: '1px solid var(--dh-border)' }}>
         <div className="daesang-container-wide" style={{ marginBottom: '24px', textAlign: 'center' }}>
           <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--dh-blue)', letterSpacing: '0.08em', display: 'block', marginBottom: '6px', textTransform: 'uppercase' }}>
-            Trusted by Major Retail Networks
+            {txt('retailEyebrow')}
           </span>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', wordBreak: 'keep-all' }}>
-            {isEn ? 'Domestic Retail Partners' : '부명과 함께하는 국내 대형 유통 파트너'}
+          <h2 className="cms-text" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', wordBreak: 'keep-all' }}>
+            {txt('retailTitle')}
           </h2>
-          <p style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem', marginTop: '6px', wordBreak: 'keep-all' }}>
-            {isEn
-              ? 'Supplying premium pet products to over 13 major hypermarkets, marts, and online channels in Korea.'
-              : '이마트, 홈플러스, 코스트코, 쿠팡, 편의점 4사 등 국내 13개 이상 유통 채널에 검증된 제품을 공급합니다.'}
+          <p className="cms-text" style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem', marginTop: '6px', wordBreak: 'keep-all' }}>
+            {txt('retailBody')}
           </p>
         </div>
 
@@ -295,15 +279,13 @@ export default function Home() {
       <section style={{ background: '#FFFFFF', padding: '50px 0', borderTop: '1px solid var(--dh-border)' }}>
         <div className="daesang-container-wide" style={{ marginBottom: '24px', textAlign: 'center' }}>
           <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--dh-blue)', letterSpacing: '0.08em', display: 'block', marginBottom: '6px', textTransform: 'uppercase' }}>
-            Trusted by Pet Specialty Distributors
+            {txt('petRetailEyebrow')}
           </span>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', wordBreak: 'keep-all' }}>
-            {isEn ? 'Domestic Pet Specialty Distributors' : '부명과 함께 하는 국내 펫 전문 유통사'}
+          <h2 className="cms-text" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dh-navy)', wordBreak: 'keep-all' }}>
+            {txt('petRetailTitle')}
           </h2>
-          <p style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem', marginTop: '6px', wordBreak: 'keep-all' }}>
-            {isEn
-              ? 'Supplying verified products to major domestic pet specialty distribution channels including THEKICO, SUJINPET, Dog & Cat Paradise, and WellPet Company.'
-              : '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.'}
+          <p className="cms-text" style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem', marginTop: '6px', wordBreak: 'keep-all' }}>
+            {txt('petRetailBody')}
           </p>
         </div>
 
@@ -331,22 +313,18 @@ export default function Home() {
       </section>
 
       {/* SECTION 4: GLOBAL REACH & CONTACT CTA */}
-      <section className="daesang-section" style={{ height: '70vh', minHeight: '650px', backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2560&q=80')" }}>
+      <section className="daesang-section" style={{ height: '70vh', minHeight: '650px', backgroundImage: `url('${img('globalImage')}')` }}>
         <div className="daesang-section-overlay" style={{ background: 'rgba(0,0,0,0.35)' }}></div>
         <div className="daesang-section-content" style={{ position: 'relative', zIndex: 3 }}>
-          <span className="daesang-poetic-sub">Global Partnership & Export</span>
-          <h2 className="daesang-poetic-title">
-            {isEn 
-              ? "Connecting domestic retail and global export markets." 
-              : "국내 대형 유통망을 넘어 세계 시장으로"}
+          <span className="daesang-poetic-sub">{txt('globalEyebrow')}</span>
+          <h2 className="daesang-poetic-title cms-text">
+            {txt('globalTitle')}
           </h2>
-          <p className="daesang-poetic-desc">
-            {isEn
-              ? "Collaborating with leading retail partners and international buyers to deliver excellence worldwide."
-              : "대형 할인마트, 이커머스 및 글로벌 수출 네트워크를 기반으로 국내외 B2B 비즈니스 파트너십을 확장해 나갑니다."}
+          <p className="daesang-poetic-desc cms-text">
+            {txt('globalBody')}
           </p>
           <Link to="/contact" className="daesang-btn-minimal">
-            {isEn ? 'INQUIRE B2B PARTNERSHIP' : 'B2B 입점 및 수출 문의'}
+            {txt('globalButton')}
           </Link>
         </div>
       </section>
