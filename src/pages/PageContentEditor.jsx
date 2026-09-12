@@ -3,13 +3,17 @@
 // 설계도에 항목을 추가하면 여기 입력칸도 같이 생깁니다.
 import React, { useState } from 'react';
 import { PAGE_SCHEMA } from '../content/pageDefaults';
+import ExpoYearEditor from './ExpoYearEditor';
 
 export default function PageContentEditor({
   isEn,
   pageContent,          // 현재 저장돼 있는 값 { 페이지: { 항목: {ko,en} | {src,kind} } }
   onSave,               // (전체 pageContent) => Promise
   uploadMedia,          // (file, field) => Promise<{src, kind}>
-  translateText         // (한글) => Promise<영문>
+  translateText,        // (한글) => Promise<영문>
+  expoYears,            // 관리자가 추가한 박람회 연도 목록
+  onSaveExpoYears,      // (연도 목록) => Promise
+  uploadExpoPhoto       // (file) => Promise<이미지 주소>
 }) {
   const pageKeys = Object.keys(PAGE_SCHEMA);
   const [activePage, setActivePage] = useState(pageKeys[0]);
@@ -133,6 +137,16 @@ export default function PageContentEditor({
           </button>
         ))}
       </div>
+
+      {/* 박람회는 매년 새로 참가하므로 "신뢰와 인증" 페이지에서만 연도 추가 편집기를 함께 보여준다 */}
+      {activePage === 'trust' && (
+        <ExpoYearEditor
+          expoYears={expoYears}
+          onSave={onSaveExpoYears}
+          uploadPhoto={uploadExpoPhoto}
+          translateText={translateText}
+        />
+      )}
 
       {page.sections.map(section => (
         <div key={section.label} style={{ marginBottom: '30px', border: '1px solid #E5E7EB', borderRadius: '10px', overflow: 'hidden' }}>

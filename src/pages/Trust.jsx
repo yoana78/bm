@@ -2,13 +2,21 @@
 // 인증서(ISO 등), 보유 특허/디자인등록, 박람회 참가 사진 갤러리, 유통 파트너사 목록을 한 페이지에 모아 보여줍니다.
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useData } from '../context/DataContext';
 import { partners } from '../data/partners';
 import { petRetailPartners } from '../data/petRetailPartners';
-import { expoPhotos } from '../data/expo';
+import { buildExpoData } from '../content/expoData';
+import { usePageContent } from '../content/usePageContent';
+import HeroMedia from '../components/HeroMedia';
 
 export default function Trust() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
+  const { siteSettings } = useData();
+  const { txt, media } = usePageContent('trust'); // 관리자 페이지에서 고칠 수 있는 배너/섹션 문구
+
+  // 기존 연도 + 관리자 페이지에서 추가한 연도를 합친 박람회 사진 목록
+  const { photos: expoPhotos, meta: expoYearMeta } = buildExpoData(siteSettings.expoYears);
 
   // 현재 팝업(모달)으로 확대해서 보고 있는 항목 상태 (각각 null이면 닫힘)
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
@@ -153,32 +161,6 @@ export default function Trust() {
   ];
 
   // 박람회 연도별 대표 제목/설명 (data/expo.js의 사진들을 연도로 묶을 때 사용)
-  const expoYearMeta = {
-    '2019': {
-      labelKo: '2019 미국 올랜도 글로벌 펫 엑스포',
-      labelEn: '2019 Global Pet Expo, Orlando',
-      descKo: '미국 올랜도 글로벌 펫 엑스포 참가 현장',
-      descEn: "Boomyung's booth at Global Pet Expo, Orlando, USA."
-    },
-    '2023': {
-      labelKo: '2023 태국 국제 펫 박람회 현장 갤러리',
-      labelEn: '2023 Pet Fair South East Asia',
-      descKo: '방콕 현지 부명 브랜드 전시 및 상담 현장',
-      descEn: "Showcasing Boomyung's premium brands to global buyers in Bangkok."
-    },
-    '2024': {
-      labelKo: '2024 태국 국제 펫 박람회 현장 갤러리',
-      labelEn: '2024 Pet Fair South East Asia',
-      descKo: '방콕 현지 부명 브랜드 전시 및 상담 현장',
-      descEn: "Showcasing Boomyung's premium brands to global buyers in Bangkok."
-    },
-    '2025': {
-      labelKo: '2025 태국 국제 펫 박람회 현장 갤러리',
-      labelEn: '2025 Pet Fair South East Asia',
-      descKo: '방콕 현지 부명 브랜드 전시 및 상담 현장',
-      descEn: "Showcasing Boomyung's premium brands to global buyers in Bangkok."
-    }
-  };
 
   // expoPhotos(전체 사진 목록)를 연도별 그룹으로 재구성 (연도마다 하나의 섹션을 렌더링하기 위함)
   const expoYearGroups = [];
@@ -218,20 +200,20 @@ export default function Trust() {
   return (
     <div className="daesang-sub-page">
       {/* SECTION: 페이지 상단 히어로 배너 (제목/부제) */}
-      <section className="daesang-sub-hero" style={{ backgroundImage: "url('./assets/trust_hero.png')" }}>
+      <HeroMedia className="daesang-sub-hero" media={media('heroImage')}>
         <div className="daesang-section-overlay"></div>
         <div className="daesang-sub-hero-content">
-          <span className="daesang-poetic-sub">QUALITY & GLOBAL TRUST</span>
-          <h1>{isEn ? 'Trust & Certification' : '신뢰와 인증'}</h1>
-          <p>{isEn ? 'Uncompromising safety protocols & international exhibition records.' : '엄격한 품질 표준과 글로벌 박람회 출품을 통해 신뢰를 실증합니다.'}</p>
+          <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+          <h1 className="cms-text">{txt('heroTitle')}</h1>
+          <p className="cms-text">{txt('heroBody')}</p>
         </div>
-      </section>
+      </HeroMedia>
 
       {/* SECTION: 인증서 카드 그리드 (클릭 시 인증서 이미지 팝업) */}
       <section className="daesang-white-section">
         <div className="daesang-container-wide">
-          <span className="daesang-brand-num">CERTIFICATIONS</span>
-          <h2 className="daesang-section-h2">{isEn ? 'Quality Management System' : '품질 및 안전 인증 시스템'}</h2>
+          <span className="daesang-brand-num">{txt('certEyebrow')}</span>
+          <h2 className="daesang-section-h2 cms-text">{txt('certTitle')}</h2>
 
           <div className="daesang-trust-grid">
             {certifications.map(cert => {
@@ -257,12 +239,10 @@ export default function Trust() {
       {/* SECTION: 보유 특허/디자인등록 그리드 (클릭 시 증서 이미지 팝업) */}
       <section className="daesang-white-section" style={{ background: '#F8F9FA', borderTop: '1px solid #EAEAEA' }}>
         <div className="daesang-container-wide">
-          <span className="daesang-brand-num">INTELLECTUAL PROPERTY</span>
-          <h2 className="daesang-section-h2">{isEn ? 'Patents Held' : '보유 특허'}</h2>
+          <span className="daesang-brand-num">{txt('patentEyebrow')}</span>
+          <h2 className="daesang-section-h2 cms-text">{txt('patentTitle')}</h2>
           <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '-8px', marginBottom: '20px' }}>
-            {isEn
-              ? 'BOOMYUNG holds patents, design registrations, and a utility model covering our pet food and accessory technologies, registered with the Korean Intellectual Property Office (KIPO).'
-              : '(주)부명은 반려동물 사료 및 용품 관련 기술에 대해 특허청(KIPO)에 등록된 특허, 디자인등록, 실용신안을 보유하고 있습니다.'}
+            {txt('patentBody')}
           </p>
 
           <div className="patents-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}>
@@ -384,8 +364,8 @@ export default function Trust() {
       {/* SECTION: 대형 유통 파트너사(마트/편의점 등) 로고 벽 */}
       <section className="daesang-white-section" style={{ background: expoYearGroups.length % 2 === 1 ? '#F8F9FA' : undefined, borderTop: '1px solid #EAEAEA' }}>
         <div className="daesang-container-wide">
-          <span className="daesang-brand-num">PARTNERSHIP</span>
-          <h2 className="daesang-section-h2">{isEn ? 'Domestic Distribution Network' : '신뢰로 인정받은 국내 대형 유통 네트워크'}</h2>
+          <span className="daesang-brand-num">{txt('networkEyebrow')}</span>
+          <h2 className="daesang-section-h2 cms-text">{txt('networkTitle')}</h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '20px', marginTop: '30px' }}>
             {partners.map(p => (
@@ -419,12 +399,10 @@ export default function Trust() {
       {/* SECTION: 반려동물 전문 유통사 로고 벽 */}
       <section className="daesang-white-section" style={{ background: expoYearGroups.length % 2 === 0 ? '#F8F9FA' : undefined, borderTop: '1px solid #EAEAEA' }}>
         <div className="daesang-container-wide">
-          <span className="daesang-brand-num">PARTNERSHIP</span>
-          <h2 className="daesang-section-h2">{isEn ? 'Domestic Pet Specialty Distributors' : '부명과 함께 하는 국내 펫 전문 유통사'}</h2>
+          <span className="daesang-brand-num">{txt('networkEyebrow')}</span>
+          <h2 className="daesang-section-h2 cms-text">{txt('petRetailTitle')}</h2>
           <p style={{ color: 'var(--dh-text-muted)', fontSize: '0.85rem', marginTop: '-16px', marginBottom: '20px', wordBreak: 'keep-all' }}>
-            {isEn
-              ? 'Supplying verified products to major domestic pet specialty distribution channels including THEKICO, SUJINPET, Dog & Cat Paradise, and WellPet Company.'
-              : '선진펫, 꼬기오, 야옹아멍멍해봐, 더 키코 등 국내 대형 펫 유통 채널에 검증된 제품을 공급합니다.'}
+            {txt('petRetailBody')}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }} className="pet-retail-grid">

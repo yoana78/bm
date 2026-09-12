@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { useLanguage } from '../i18n/LanguageContext';
 import PageContentEditor from './PageContentEditor';
+import { EXPO_PHOTO_SIZE } from '../content/expoData';
 
 const ADMIN_TOKEN_KEY = 'boomyung_admin_token';
 
@@ -268,6 +269,12 @@ export default function Admin() {
     }
     const dataUrl = await cropImageToBox(file, field.width, field.height);
     return { src: await uploadImage(dataUrl), kind: 'image' };
+  };
+
+  // 박람회 갤러리 사진 업로드 — 타일 규격에 맞춰 가운데를 기준으로 잘라낸다
+  const handleUploadExpoPhoto = async (file) => {
+    const dataUrl = await cropImageToBox(file, EXPO_PHOTO_SIZE.width, EXPO_PHOTO_SIZE.height);
+    return uploadImage(dataUrl);
   };
 
   // 영문 항목을 비워두면 한글 값을 자동 번역해서 채워주는 헬퍼 (실패 시 조용히 빈 값 유지)
@@ -1486,6 +1493,9 @@ export default function Admin() {
               onSave={(pageContent) => updateSiteSettings({ pageContent })}
               uploadMedia={handleUploadPageMedia}
               translateText={translateText}
+              expoYears={siteSettings.expoYears || []}
+              onSaveExpoYears={(expoYears) => updateSiteSettings({ expoYears })}
+              uploadExpoPhoto={handleUploadExpoPhoto}
             />
           )}
 
