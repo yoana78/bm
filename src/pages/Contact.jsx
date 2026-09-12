@@ -6,13 +6,16 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
+import { usePageContent } from '../content/usePageContent';
+import HeroMedia from '../components/HeroMedia';
 
 const WEB3FORMS_ACCESS_KEY = '8207939c-fd68-4c59-ae20-62ea022b6952';
 
 export default function Contact() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
-  const { brands } = useData();
+  const { brands, siteSettings } = useData();
+  const { txt, media } = usePageContent('contact'); // 관리자 페이지에서 고칠 수 있는 문구/사진
 
   // 문의 폼 입력값 상태
   const [formData, setFormData] = useState({
@@ -106,27 +109,25 @@ export default function Contact() {
   return (
     <div className="daesang-sub-page">
       {/* SECTION: 페이지 상단 히어로 배너 (제목/부제) */}
-      <section className="daesang-sub-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=2560&q=80')" }}>
+      <HeroMedia className="daesang-sub-hero" media={media('heroImage')}>
         <div className="daesang-section-overlay"></div>
         <div className="daesang-sub-hero-content">
-          <span className="daesang-poetic-sub">INQUIRY & SALES CONTACT</span>
-          <h1>{isEn ? 'Contact Us & Sales Routing' : 'B2B 입점 및 영업 담당자 문의'}</h1>
-          <p>{isEn ? 'Connect with BOOMYUNG for domestic retail distribution and global export partnerships.' : '(주)부명과 함께 성장할 국내외 파트너사의 문의 및 영업 담당자를 안내합니다.'}</p>
+          <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+          <h1 className="cms-text">{txt('heroTitle')}</h1>
+          <p className="cms-text">{txt('heroBody')}</p>
         </div>
-      </section>
+      </HeroMedia>
 
       {/* SECTION 1: BUSINESS CARDS SHOWCASE (영업 1팀 / 2팀 명함) */}
       <section className="daesang-white-section" style={{ borderBottom: '1px solid var(--dh-border)' }}>
         <div className="daesang-container-wide">
           <div style={{ marginBottom: '24px' }}>
-            <span className="daesang-brand-num">SALES REPRESENTATIVES</span>
-            <h2 className="daesang-section-h2" style={{ marginBottom: '8px' }}>
-              {isEn ? 'Direct Sales Representatives Business Cards' : '부명 영업1팀 · 영업2팀 담당자 명함 안내'}
+            <span className="daesang-brand-num">{txt('cardsEyebrow')}</span>
+            <h2 className="daesang-section-h2 cms-text" style={{ marginBottom: '8px' }}>
+              {txt('cardsTitle')}
             </h2>
-            <p style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem' }}>
-              {isEn
-                ? 'Click on the card to inspect high-resolution business card details or reach out directly.'
-                : '문의 유형에 맞춰 담당 영업팀 명함을 확인하시거나 직접 연락을 주시면 더욱 빠르고 원활한 상담이 가능합니다.'}
+            <p className="cms-text" style={{ color: 'var(--dh-text-muted)', fontSize: '0.82rem' }}>
+              {txt('cardsBody')}
             </p>
           </div>
 
@@ -195,34 +196,32 @@ export default function Contact() {
         <div className="daesang-container-wide">
           <div className="daesang-contact-grid">
             <div className="contact-info-col">
-              <span className="daesang-brand-num">HEADQUARTERS</span>
-              <h2>{isEn ? 'Corporate Information' : '(주)부명 본사 안내'}</h2>
-              <p className="contact-desc">
-                {isEn 
-                  ? 'Feel free to contact us regarding OEM/ODM manufacturing, retail distribution, or global export inquiries.' 
-                  : '제품 유통, 대형마트 입점, 해외 수출 및 OEM/ODM 제조 관련 문의를 남겨주시면 담당 파트너십 팀이 안내해 드립니다.'}
+              <span className="daesang-brand-num">{txt('hqEyebrow')}</span>
+              <h2 className="cms-text">{txt('hqTitle')}</h2>
+              <p className="contact-desc cms-text">
+                {txt('hqBody')}
               </p>
 
               <div className="contact-meta">
                 <div className="meta-row">
                   <strong>ADDRESS:</strong>
-                  <span>{isEn ? '306, 19, Geonwon-daero 34beon-gil, Guri-si, Gyeonggi-do, Korea' : '경기도 구리시 건원대로34번길 19 306 (주)부명'}</span>
+                  <span className="cms-text">{txt('hqAddress')}</span>
                 </div>
                 <div className="meta-row">
                   <strong>TEL:</strong>
-                  <span>031-553-8003</span>
+                  <span>{txt('hqTel')}</span>
                 </div>
                 <div className="meta-row">
                   <strong>FAX:</strong>
-                  <span>031-592-2460</span>
+                  <span>{txt('hqFax')}</span>
                 </div>
                 <div className="meta-row">
                   <strong>E-MAIL:</strong>
-                  <span>help@petsb2b.co.kr</span>
+                  <span>{siteSettings.contactEmail}</span>
                 </div>
                 <div className="meta-row">
                   <strong>{isEn ? 'BIZ REG NO.:' : '사업자등록번호:'}</strong>
-                  <span>132-81-49973</span>
+                  <span>{txt('hqBizNo')}</span>
                 </div>
               </div>
             </div>

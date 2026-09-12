@@ -5,24 +5,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
+import { usePageContent } from '../content/usePageContent';
+import HeroMedia from '../components/HeroMedia';
 
 export default function ImportedBrands() {
   const { lang } = useLanguage();
   const { brands: allBrands } = useData();
+  const { txt, media } = usePageContent('importedBrands'); // 관리자 페이지에서 고칠 수 있는 배너 문구/사진
   const brands = allBrands.filter(b => b.type === 'imported'); // 수입 브랜드만 필터링
   const isEn = lang === 'en';
 
   return (
     <div className="daesang-sub-page">
       {/* SECTION: 페이지 상단 히어로 배너 (제목/부제) */}
-      <section className="daesang-sub-hero" style={{ backgroundImage: "url('./assets/hero_slide_2.jpg')" }}>
+      <HeroMedia className="daesang-sub-hero" media={media('heroImage')}>
         <div className="daesang-section-overlay"></div>
         <div className="daesang-sub-hero-content">
-          <span className="daesang-poetic-sub">IMPORTED PORTFOLIO</span>
-          <h1>{isEn ? 'Imported Brands' : '수입 브랜드'}</h1>
-          <p>{isEn ? 'Global pet brands carefully selected and distributed by BOOMYUNG.' : '(주)부명이 엄선하여 국내에 유통하는 글로벌 펫 브랜드를 소개합니다.'}</p>
+          <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+          <h1 className="cms-text">{txt('heroTitle')}</h1>
+          <p className="cms-text">{txt('heroBody')}</p>
         </div>
-      </section>
+      </HeroMedia>
 
       {/* SECTION: 브랜드 카드 그리드 (클릭 시 각 브랜드 상세 페이지로 이동) */}
       <section className="daesang-white-section">

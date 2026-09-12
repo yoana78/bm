@@ -5,6 +5,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useData } from '../context/DataContext';
+import { usePageContent } from '../content/usePageContent';
+import HeroMedia from '../components/HeroMedia';
 
 // 카테고리 한글명 -> 영문명 매핑 (영어 모드일 때 표시용)
 const CATEGORY_EN = {
@@ -17,6 +19,7 @@ const CATEGORY_EN = {
 export default function Catalog() {
   const { lang } = useLanguage();
   const { brands, products } = useData();
+  const { txt, media } = usePageContent('catalog'); // 관리자 페이지에서 고칠 수 있는 배너 문구/사진
   const isEn = lang === 'en';
   const [searchParams] = useSearchParams(); // 다른 페이지에서 ?category=..&brand=.. 형태로 넘어온 값 읽기
 
@@ -49,14 +52,14 @@ export default function Catalog() {
   return (
     <div className="daesang-sub-page">
       {/* SECTION: 페이지 상단 히어로 배너 (제목/부제) */}
-      <section className="daesang-sub-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=2560&q=80')" }}>
+      <HeroMedia className="daesang-sub-hero" media={media('heroImage')}>
         <div className="daesang-section-overlay"></div>
         <div className="daesang-sub-hero-content">
-          <span className="daesang-poetic-sub">CATALOG</span>
-          <h1>{isEn ? 'Product Catalog' : '제품 카탈로그'}</h1>
-          <p>{isEn ? 'Explore our complete portfolio of nutrition, treats, litter, and supplies.' : '(주)부명의 전체 펫 푸드 및 위생용품 카탈로그를 확인하실 수 있습니다.'}</p>
+          <span className="daesang-poetic-sub">{txt('heroEyebrow')}</span>
+          <h1 className="cms-text">{txt('heroTitle')}</h1>
+          <p className="cms-text">{txt('heroBody')}</p>
         </div>
-      </section>
+      </HeroMedia>
 
       {/* SECTION: 필터 영역 + 제품 그리드 */}
       <section className="daesang-white-section">

@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { useLanguage } from '../i18n/LanguageContext';
+import PageContentEditor from './PageContentEditor';
 
 const ADMIN_TOKEN_KEY = 'boomyung_admin_token';
 
@@ -50,6 +51,68 @@ function compressImage(file, { maxDimension = 1600, startQuality = 0.85, maxBase
         } else {
           dataUrl = canvas.toDataURL('image/jpeg', quality);
         }
+      }
+      resolve(dataUrl);
+    };
+    img.onerror = reject;
+    img.src = objectUrl;
+  });
+}
+
+// 페이지에 들어가는 이미지는 자리마다 노출 규격(가로:세로 비율)이 정해져 있다.
+// 다른 비율의 사진을 올리면 레이아웃이 깨지므로, 가운데를 기준으로 잘라내(center crop)
+// 규격 비율에 맞춘 뒤 권장 해상도까지만 줄여서 저장한다.
+function cropImageToBox(file, targetWidth, targetHeight, { maxBase64Length = 850000 } = {}) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+
+      const targetRatio = targetWidth / targetHeight;
+      const sourceRatio = img.width / img.height;
+
+      // 원본에서 잘라낼 영역 — 비율이 남는 쪽(가로가 넓으면 좌우, 세로가 길면 위아래)을 잘라낸다
+      let sx = 0, sy = 0, sw = img.width, sh = img.height;
+      if (sourceRatio > targetRatio) {
+        sw = Math.round(img.height * targetRatio);
+        sx = Math.round((img.width - sw) / 2);
+      } else if (sourceRatio < targetRatio) {
+        sh = Math.round(img.width / targetRatio);
+        sy = Math.round((img.height - sh) / 2);
+      }
+
+      // 원본이 권장 해상도보다 작으면 억지로 늘리지 않는다 (확대하면 흐려지기만 함)
+      let outW = Math.min(targetWidth, sw);
+      let outH = Math.round(outW / targetRatio);
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const keepPng = file.type === 'image/png';
+
+      const draw = () => {
+        canvas.width = outW;
+        canvas.height = outH;
+        if (!keepPng) {
+          // JPEG는 투명도가 없어 검게 깔리므로 흰 배경을 먼저 채운다
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, outW, outH);
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+      };
+
+      draw();
+      let quality = 0.88;
+      let dataUrl = canvas.toDataURL(keepPng ? 'image/png' : 'image/jpeg', quality);
+      while (dataUrl.length > maxBase64Length && (quality > 0.35 || outW > 400)) {
+        if (quality > 0.35) {
+          quality -= 0.08;
+        } else {
+          outW = Math.round(outW * 0.85);
+          outH = Math.round(outW / targetRatio);
+          draw();
+        }
+        dataUrl = canvas.toDataURL(keepPng ? 'image/png' : 'image/jpeg', keepPng ? undefined : quality);
       }
       resolve(dataUrl);
     };
@@ -184,6 +247,27 @@ export default function Admin() {
   const readAndUpload = async (file) => {
     const dataUrl = await compressImage(file);
     return uploadImage(dataUrl);
+  };
+
+  // 페이지 문구·이미지 탭 전용 업로드.
+  // 사진은 그 자리의 노출 규격(가로:세로)에 맞춰 가운데를 기준으로 자동 크롭하고,
+  // 동영상은 잘라낼 수 없으므로 파일을 그대로 올린다.
+  const handleUploadPageMedia = async (file, field) => {
+    if (file.type.startsWith('video/')) {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      // 이미지 저장소(D1) 한 칸 용량 제한에 걸리면 업로드 자체가 실패하므로 미리 안내한다
+      if (dataUrl.length > 900000) {
+        throw new Error('영상 용량이 너무 큽니다 (약 600KB 이하만 가능). 더 짧거나 더 압축된 영상을 올려주세요.');
+      }
+      return { src: await uploadImage(dataUrl), kind: 'video' };
+    }
+    const dataUrl = await cropImageToBox(file, field.width, field.height);
+    return { src: await uploadImage(dataUrl), kind: 'image' };
   };
 
   // 영문 항목을 비워두면 한글 값을 자동 번역해서 채워주는 헬퍼 (실패 시 조용히 빈 값 유지)
@@ -747,6 +831,22 @@ export default function Admin() {
               }}
             >
               3. {isEn ? 'Site Settings' : '사이트 설정'}
+            </button>
+            <button
+              onClick={() => setActiveTab('pages')}
+              style={{
+                padding: '12px 28px',
+                fontSize: '1.05rem',
+                fontWeight: '700',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'pages' ? '#0066B3' : '#F3F4F6',
+                color: activeTab === 'pages' ? '#FFFFFF' : '#4B5563',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              4. {isEn ? 'Page Text / Images' : '페이지 문구·이미지'}
             </button>
             <button
               onClick={() => {
@@ -1376,6 +1476,17 @@ export default function Admin() {
                 )}
               </div>
             </div>
+          )}
+
+          {/* SECTION: [페이지 문구·이미지 탭] 각 페이지의 섹션 문구와 배너 사진/영상 수정 */}
+          {activeTab === 'pages' && (
+            <PageContentEditor
+              isEn={isEn}
+              pageContent={siteSettings.pageContent || {}}
+              onSave={(pageContent) => updateSiteSettings({ pageContent })}
+              uploadMedia={handleUploadPageMedia}
+              translateText={translateText}
+            />
           )}
 
           {/* SECTION: [사이트 설정 탭] 문의 수신 이메일 + 홈 히어로 이미지 + 비전 섹션 배경 이미지 관리 */}
