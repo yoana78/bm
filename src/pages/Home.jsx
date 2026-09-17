@@ -230,9 +230,8 @@ export default function Home() {
               const logoHeightMap = { bellbird: 77, howpet: 58, petstages: 58 };
               const logoHeight = logoHeightMap[b.id] || 64;
               return (
-              <Link to={`/brands/${b.id}`} key={b.id} className="daesang-brand-item" style={{ textDecoration: 'none', background: '#FFFFFF', padding: '24px', borderRadius: '10px', border: '1px solid var(--dh-border)', transition: 'all 0.2s ease' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', minHeight: '68px' }}>
-                  <span className="daesang-brand-num" style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--dh-blue)' }}>0{idx + 1}</span>
+              <Link to={`/brands/${b.id}`} key={b.id} className="daesang-brand-item" style={{ textDecoration: 'none' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', minHeight: '68px' }}>
                   {b.logo && (
                     <img src={b.logo} alt={b.nameKo} style={{ height: `${logoHeight}px`, maxWidth: '200px', objectFit: 'contain', transform: `scale(${b.logoScale || 1})` }} />
                   )}

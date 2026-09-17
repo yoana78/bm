@@ -45,7 +45,7 @@ export default function Header() {
           {isEn ? 'Product Catalog' : '제품 카탈로그'}
         </NavLink>
         <NavLink to="/trust" className={({ isActive }) => (isActive ? 'active' : '')}>
-          {isEn ? 'Trust & Quality' : '신뢰와 인증'}
+          {isEn ? 'Trust & Quality' : '품질·인증'}
         </NavLink>
         <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
           {isEn ? 'Contact Us' : '문의하기'}

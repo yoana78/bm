@@ -31,13 +31,17 @@ export default function Footer() {
             </div>
             <p>
               {isEn
-                ? '306, 19, Geonwon-daero 34beon-gil, Guri-si, Gyeonggi-do, Republic of Korea | TEL: +82-31-553-8003 | FAX: +82-31-592-2460'
-                : '경기도 구리시 건원대로34번길 19 306 | TEL: 031-553-8003 | FAX: 031-592-2460'}
+                ? '306, 19, Geonwon-daero 34beon-gil, Guri-si, Gyeonggi-do, Republic of Korea'
+                : '경기도 구리시 건원대로34번길 19 306'}
+              <br />
+              {isEn ? 'Business Registration No.: 132-81-49973' : '사업자등록번호: 132-81-49973'}
             </p>
             <p>
-              {isEn
-                ? 'E-MAIL: help@petsb2b.co.kr | Business Registration No.: 132-81-49973'
-                : 'E-MAIL: help@petsb2b.co.kr | 사업자등록번호: 132-81-49973'}
+              TEL: {isEn ? '+82-31-553-8003' : '031-553-8003'}
+              <br />
+              FAX: {isEn ? '+82-31-592-2460' : '031-592-2460'}
+              <br />
+              E-MAIL: help@petsb2b.co.kr
             </p>
           </div>
 
@@ -54,7 +58,7 @@ export default function Footer() {
                 {isEn ? 'Our Brands' : '브랜드'}
               </Link>
               <Link to="/trust" style={{ color: '#CBD5E1', textDecoration: 'none' }}>
-                {isEn ? 'Trust & Quality' : '신뢰와 인증'}
+                {isEn ? 'Trust & Quality' : '품질·인증'}
               </Link>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

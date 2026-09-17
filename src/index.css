@@ -307,18 +307,21 @@ h1, h2, h3, h4, h5, h6, p, span, a, label {
 }
 
 .daesang-brand-item {
-  background: #FFFFFF;
-  border: 1px solid var(--dh-border);
-  border-radius: 8px;
-  padding: 20px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--dh-border);
+  border-left: 1px solid var(--dh-border);
+  padding: 24px 20px;
+  transition: background 0.2s ease;
+}
+
+.daesang-grid-brands {
+  border-right: 1px solid var(--dh-border);
+  border-bottom: 1px solid var(--dh-border);
 }
 
 .daesang-brand-item:hover {
-  border-color: var(--dh-blue);
-  box-shadow: 0 6px 16px rgba(0, 102, 179, 0.08);
-  transform: translateY(-2px);
+  background: var(--dh-blue-light, #EBF5FF);
 }
 
 /* ===== 회사소개 페이지 - CI(로고) 소개 카드 스타일 ===== */
