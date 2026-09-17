@@ -50,7 +50,7 @@ export default function Brands() {
                   <h2>{isEn ? (b.nameEn || b.nameKo) : b.nameKo}</h2>
                   <span className="brand-card-tagline">{isEn ? (b.taglineEn || b.tagline) : b.tagline}</span>
                   <p>{isEn ? b.descriptionEn : b.descriptionKo}</p>
-                  <span className="brand-card-link">{isEn ? 'VIEW PRODUCTS' : '브랜드 세부보기'} _</span>
+                  <span className="brand-card-link">{isEn ? 'VIEW PRODUCTS' : '브랜드 바로가기'}</span>
                 </div>
               </Link>
             ))}
