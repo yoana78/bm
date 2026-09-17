@@ -31,17 +31,10 @@ export default function Footer() {
             </div>
             <p>
               {isEn
-                ? '306, 19, Geonwon-daero 34beon-gil, Guri-si, Gyeonggi-do, Republic of Korea'
-                : '경기도 구리시 건원대로34번길 19 306'}
+                ? '306, 19, Geonwon-daero 34beon-gil, Guri-si, Gyeonggi-do, Republic of Korea | Business Registration No.: 132-81-49973'
+                : '경기도 구리시 건원대로34번길 19 306 | 사업자등록번호: 132-81-49973'}
               <br />
-              {isEn ? 'Business Registration No.: 132-81-49973' : '사업자등록번호: 132-81-49973'}
-            </p>
-            <p>
-              TEL: {isEn ? '+82-31-553-8003' : '031-553-8003'}
-              <br />
-              FAX: {isEn ? '+82-31-592-2460' : '031-592-2460'}
-              <br />
-              E-MAIL: help@petsb2b.co.kr
+              TEL: {isEn ? '+82-31-553-8003' : '031-553-8003'} | FAX: {isEn ? '+82-31-592-2460' : '031-592-2460'} | E-MAIL: help@petsb2b.co.kr
             </p>
           </div>
 
@@ -81,9 +74,6 @@ export default function Footer() {
           <div style={{ display: 'flex', gap: '24px' }}>
             <span style={{ color: '#CBD5E1', cursor: 'pointer' }} onClick={() => setShowPrivacyModal(true)}>{isEn ? 'Privacy Policy' : '개인정보처리방침'}</span>
             <span style={{ color: '#CBD5E1', cursor: 'pointer' }} onClick={() => setShowTermsModal(true)}>{isEn ? 'Terms of Service' : '이용약관'}</span>
-            <Link to="/admin" style={{ color: '#CBD5E1', textDecoration: 'none' }}>
-              {isEn ? 'Admin' : '관리자'}
-            </Link>
           </div>
         </div>
       </div>
