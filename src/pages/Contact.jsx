@@ -120,23 +120,12 @@ export default function Contact() {
                   key={card.id}
                   className="business-card"
                   style={{
-                    background: '#FFFFFF',
-                    border: '1px solid var(--dh-border)',
-                    borderRadius: '12px',
-                    padding: '20px',
-                    boxShadow: '0 2px 8px rgba(0, 102, 179, 0.04)',
+                    background: 'transparent',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    transition: 'all 0.2s ease'
+                    alignItems: 'center'
                   }}
                 >
-                  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--dh-blue)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                      {isEn ? card.titleEn : card.titleKo}
-                    </span>
-                  </div>
-
                   <div
                     className="business-card-image"
                     onClick={() => setActiveCardModal(currentImg)}

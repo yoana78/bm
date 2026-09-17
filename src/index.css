@@ -458,17 +458,17 @@ h1, h2, h3, h4, h5, h6, p, span, a, label {
 }
 
 .daesang-sub-right p.daesang-lead-text {
-  font-family: 'NanumPenScript', 'Noto Sans KR', cursive;
-  font-size: 1.35rem;
-  font-weight: 400;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 600;
   line-height: 1.7;
   color: var(--dh-navy);
   margin-bottom: 12px;
 }
 
 .daesang-sub-right p:not(.daesang-lead-text) {
-  font-family: 'NanumPenScript', 'Noto Sans KR', cursive;
-  font-size: 1.35rem;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
   line-height: 1.7;
 }
 
@@ -1024,9 +1024,12 @@ h1, h2, h3, h4, h5, h6, p, span, a, label {
     margin-bottom: 16px;
   }
 
-  .daesang-sub-right p.daesang-lead-text,
+  .daesang-sub-right p.daesang-lead-text {
+    font-size: 1.02rem;
+  }
+
   .daesang-sub-right p:not(.daesang-lead-text) {
-    font-size: 1.15rem;
+    font-size: 0.9rem;
   }
 
   /* 홈 화면 - 히어로 슬라이더 & 비전 섹션(둘 다 90vh/850px 고정 높이라 모바일에서 위아래로 과도하게
