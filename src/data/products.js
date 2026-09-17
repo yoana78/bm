@@ -37,7 +37,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image1.png",
+    "image": "./assets/products/image1.jpg",
     "featuresEn": [
       "For growing puppies aged 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -73,7 +73,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image3.png",
+    "image": "./assets/products/image3.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -109,7 +109,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image2.png",
+    "image": "./assets/products/image2.jpg",
     "featuresEn": [
       "Skin-care food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -145,7 +145,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image29.png",
+    "image": "./assets/products/image29.jpg",
     "featuresEn": [
       "Joint-care food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -181,7 +181,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image26.png",
+    "image": "./assets/products/image26.jpg",
     "featuresEn": [
       "Weight-control food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -217,7 +217,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image28.png",
+    "image": "./assets/products/image28.jpg",
     "featuresEn": [
       "Eye-care food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -253,7 +253,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image27.png",
+    "image": "./assets/products/image27.jpg",
     "featuresEn": [
       "For senior dogs aged 8 years and older",
       "Duck and salmon used as main ingredients",
@@ -289,7 +289,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image30.png",
+    "image": "./assets/products/image30.jpg",
     "featuresEn": [
       "Exclusively formulated for Maltese, 2 months and older",
       "Insect protein and duck used as main ingredients",
@@ -325,7 +325,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image32.png",
+    "image": "./assets/products/image32.jpg",
     "featuresEn": [
       "Exclusively formulated for Poodles, 2 months and older",
       "Insect protein and duck used as main ingredients",
@@ -361,7 +361,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image31.png",
+    "image": "./assets/products/image31.jpg",
     "featuresEn": [
       "Exclusively formulated for Pomeranians, 2 months and older",
       "Insect protein and duck used as main ingredients",
@@ -397,7 +397,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image33.png",
+    "image": "./assets/products/image33.jpg",
     "featuresEn": [
       "Exclusively formulated for Pomeranians, 2 months and older",
       "Single insect-protein source: black soldier fly larvae as the main ingredient",
@@ -433,7 +433,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image67.png",
+    "image": "./assets/products/image67.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -469,7 +469,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image66.png",
+    "image": "./assets/products/image66.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -505,7 +505,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image65.png",
+    "image": "./assets/products/image65.jpg",
     "featuresEn": [
       "Exclusively formulated for large breed dogs, 2 months and older",
       "Duck and chicken used as main ingredients",
@@ -541,7 +541,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image34.png",
+    "image": "./assets/products/image34.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -577,7 +577,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image35.png",
+    "image": "./assets/products/image35.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -613,7 +613,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image62.png",
+    "image": "./assets/products/image62.jpg",
     "featuresEn": [
       "Skin-care food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -649,7 +649,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image64.png",
+    "image": "./assets/products/image64.jpg",
     "featuresEn": [
       "Weight-management food for dogs of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -685,7 +685,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image63.png",
+    "image": "./assets/products/image63.jpg",
     "featuresEn": [
       "For senior dogs aged 8 years and older",
       "Duck and salmon used as main ingredients",
@@ -721,7 +721,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image68.png",
+    "image": "./assets/products/image68.jpg",
     "featuresEn": [
       "Exclusively formulated for large breed dogs, 2 months and older",
       "Duck and chicken used as main ingredients",
@@ -757,7 +757,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image69.png",
+    "image": "./assets/products/image69.jpg",
     "featuresEn": [
       "Exclusively formulated for large breed dogs, 2 months and older",
       "Duck and chicken used as main ingredients",
@@ -793,7 +793,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image56.png",
+    "image": "./assets/products/image56.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Duck used as the main ingredient",
@@ -829,7 +829,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image57.png",
+    "image": "./assets/products/image57.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Lamb used as the main ingredient",
@@ -865,7 +865,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image58.png",
+    "image": "./assets/products/image58.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Salmon used as the main ingredient",
@@ -901,7 +901,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image59.png",
+    "image": "./assets/products/image59.jpg",
     "featuresEn": [
       "For dogs of all life stages, 2 months and older",
       "Black soldier fly larvae used as the main ingredient (40% content)",
@@ -937,7 +937,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image60.png",
+    "image": "./assets/products/image60.jpg",
     "featuresEn": [
       "Food for Maltese of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -973,7 +973,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image51.png",
+    "image": "./assets/products/image51.jpg",
     "featuresEn": [
       "Food for Poodles of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1009,7 +1009,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image52.png",
+    "image": "./assets/products/image52.jpg",
     "featuresEn": [
       "Food for Maltese of all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1045,7 +1045,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image78.png",
+    "image": "./assets/products/image78.jpg",
     "featuresEn": [
       "Joint-care food for all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1081,7 +1081,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image79.png",
+    "image": "./assets/products/image79.jpg",
     "featuresEn": [
       "Weight-control food for all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1117,7 +1117,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image80.png",
+    "image": "./assets/products/image80.jpg",
     "featuresEn": [
       "Eye-care food for all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1153,7 +1153,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image81.png",
+    "image": "./assets/products/image81.jpg",
     "featuresEn": [
       "Skin-care food for all life stages, 2 months and older",
       "Duck and salmon used as main ingredients",
@@ -1189,7 +1189,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image53.png",
+    "image": "./assets/products/image53.jpg",
     "featuresEn": [
       "Food for all life stages, 2 months and older",
       "Duck to support skin health,",
@@ -1225,7 +1225,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image54.png",
+    "image": "./assets/products/image54.jpg",
     "featuresEn": [
       "Food for all life stages, 2 months and older",
       "High-protein lamb used as the main ingredient",
@@ -1261,7 +1261,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image55.png",
+    "image": "./assets/products/image55.jpg",
     "featuresEn": [
       "Food for all life stages, 2 months and older",
       "Duck used as the main ingredient to support skin health",
@@ -1295,7 +1295,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/image43.png",
+    "image": "./assets/products/image43.jpg",
     "featuresEn": [
       "Joint supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1329,7 +1329,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/hseries_skin.png",
+    "image": "./assets/products/hseries_skin.jpg",
     "featuresEn": [
       "Skin supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1365,7 +1365,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/hseries_total.png",
+    "image": "./assets/products/hseries_total.jpg",
     "featuresEn": [
       "Multi-nutrient supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1400,7 +1400,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/hseries_digest.png",
+    "image": "./assets/products/hseries_digest.jpg",
     "featuresEn": [
       "Gut-health supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1435,7 +1435,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/fucoidan_joint.png",
+    "image": "./assets/products/fucoidan_joint.jpg",
     "featuresEn": [
       "Joint supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1471,7 +1471,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/fucoidan_skin.png",
+    "image": "./assets/products/fucoidan_skin.jpg",
     "featuresEn": [
       "Skin supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1507,7 +1507,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/fucoidan_total.png",
+    "image": "./assets/products/fucoidan_total.jpg",
     "featuresEn": [
       "Multi-nutrient supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1543,7 +1543,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "dog",
-    "image": "./assets/products/fucoidan_gut.png",
+    "image": "./assets/products/fucoidan_gut.jpg",
     "featuresEn": [
       "Gut-health supplement for all life stages, 2 months and older",
       "Hydrolyzed ingredients used to help prevent allergies",
@@ -1579,7 +1579,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image38.png",
+    "image": "./assets/products/image38.jpg",
     "featuresEn": [
       "Dental chew for dogs of all life stages, 2 months and older",
       "Grain-free formula to help prevent grain allergies",
@@ -1615,7 +1615,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image37.png",
+    "image": "./assets/products/image37.jpg",
     "featuresEn": [
       "Dental chew for dogs of all life stages, 2 months and older",
       "Grain-free formula to help prevent grain allergies",
@@ -1651,7 +1651,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image40.png",
+    "image": "./assets/products/image40.jpg",
     "featuresEn": [
       "Dental chew for dogs of all life stages, 2 months and older",
       "Grain-free formula to help prevent grain allergies",
@@ -1687,7 +1687,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image41.png",
+    "image": "./assets/products/image41.jpg",
     "featuresEn": [
       "Dental chew for dogs of all life stages, 2 months and older",
       "Grain-free formula to help prevent grain allergies",
@@ -1723,7 +1723,7 @@ export const products = [
     "origin": "대한민국",
     "category": "용품",
     "petType": "dog",
-    "image": "./assets/products/image42.png",
+    "image": "./assets/products/image42.jpg",
     "featuresEn": [
       "For pets of all life stages, 2 months and older",
       "70% human-grade premium dried pollack added",
@@ -1759,7 +1759,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image39.png",
+    "image": "./assets/products/image39.jpg",
     "featuresEn": [
       "Dental chew for all life stages, 2 months and older",
       "Certified by the Korea Companion Animal Standards Institute",
@@ -1795,7 +1795,7 @@ export const products = [
     "origin": "대한민국",
     "category": "용품",
     "petType": "dog",
-    "image": "./assets/products/image36.png",
+    "image": "./assets/products/image36.jpg",
     "featuresEn": [
       "Treat for dogs of all life stages, 2 months and older",
       "Great taste and nutrition",
@@ -1831,7 +1831,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image74.png",
+    "image": "./assets/products/image74.jpg",
     "featuresEn": [
       "Treat for dogs of all life stages, 2 months and older",
       "Soft gel type",
@@ -1867,7 +1867,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image77.png",
+    "image": "./assets/products/image77.jpg",
     "featuresEn": [
       "Treat for dogs of all life stages, 2 months and older",
       "Soft gel type",
@@ -1903,7 +1903,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image76.png",
+    "image": "./assets/products/image76.jpg",
     "featuresEn": [
       "Treat for dogs of all life stages, 2 months and older",
       "Soft gel type",
@@ -1939,7 +1939,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image75.png",
+    "image": "./assets/products/image75.jpg",
     "featuresEn": [
       "Treat for dogs of all life stages, 2 months and older",
       "Soft gel type",
@@ -1973,7 +1973,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image18.png",
+    "image": "./assets/products/image18.jpg",
     "featuresEn": [
       "For pets of all life stages, 2 months and older",
       "Lactose-free formula for comfortable digestion",
@@ -2006,7 +2006,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "dog",
-    "image": "./assets/products/image17.png",
+    "image": "./assets/products/image17.jpg",
     "featuresEn": [
       "For pets of all life stages, 2 months and older",
       "Lactose-free formula for comfortable digestion",
@@ -2039,7 +2039,7 @@ export const products = [
     "origin": "대한민국",
     "category": "용품",
     "petType": "dog",
-    "image": "./assets/products/image20.png",
+    "image": "./assets/products/image20.jpg",
     "featuresEn": [
       "Pet milk for pets of all life stages, 2 months and older",
       "Lactose-free formula for comfortable digestion",
@@ -2072,7 +2072,7 @@ export const products = [
     "origin": "대한민국",
     "category": "용품",
     "petType": "dog",
-    "image": "./assets/products/image19.png",
+    "image": "./assets/products/image19.jpg",
     "featuresEn": [
       "Pet milk for pets of all life stages, 2 months and older",
       "Lactose-free formula for comfortable digestion",
@@ -2106,7 +2106,7 @@ export const products = [
     "origin": "대한민국",
     "category": "용품",
     "petType": "dog",
-    "image": "./assets/products/image61.png",
+    "image": "./assets/products/image61.jpg",
     "featuresEn": [
       "Pet milk for pets of all life stages, 2 months and older",
       "Lactose-free formula for comfortable digestion",
@@ -2141,7 +2141,7 @@ export const products = [
     "origin": "대한민국",
     "category": "사료",
     "petType": "cat",
-    "image": "./assets/products/image82.png",
+    "image": "./assets/products/image82.jpg",
     "featuresEn": [
       "Food for cats of all life stages, 2 months and older",
       "Balanced nutrition",
@@ -2177,7 +2177,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "cat",
-    "image": "./assets/products/image86.png",
+    "image": "./assets/products/image86.jpg",
     "featuresEn": [
       "Treat for cats of all life stages, 2 months and older",
       "Soft gel type",
@@ -2213,7 +2213,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "cat",
-    "image": "./assets/products/image87.png",
+    "image": "./assets/products/image87.jpg",
     "featuresEn": [
       "Treat for cats of all life stages, 2 months and older",
       "Soft gel type",
@@ -2249,7 +2249,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "cat",
-    "image": "./assets/products/image85.png",
+    "image": "./assets/products/image85.jpg",
     "featuresEn": [
       "Treat for cats of all life stages, 2 months and older",
       "Soft gel type",
@@ -2285,7 +2285,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "cat",
-    "image": "./assets/products/image83.png",
+    "image": "./assets/products/image83.jpg",
     "featuresEn": [
       "Treat for cats of all life stages, 2 months and older",
       "Soft gel type",
@@ -2321,7 +2321,7 @@ export const products = [
     "origin": "대한민국",
     "category": "간식",
     "petType": "cat",
-    "image": "./assets/products/image84.png",
+    "image": "./assets/products/image84.jpg",
     "featuresEn": [
       "Treat for cats of all life stages, 2 months and older",
       "Soft gel type",

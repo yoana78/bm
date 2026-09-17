@@ -15,9 +15,9 @@ function splitParagraphs(text) {
 
 // 인프라 섹션의 "웰젠" 카드를 클릭하면 뜨는 갤러리 이미지들
 const wellzenImages = [
-  './assets/wellzen/wellzen_01.png',
-  './assets/wellzen/wellzen_02.png',
-  './assets/wellzen/wellzen_03.png'
+  './assets/wellzen/wellzen_01.jpg',
+  './assets/wellzen/wellzen_02.jpg',
+  './assets/wellzen/wellzen_03.jpg'
 ];
 
 // 인프라 섹션의 "호마드 공장" 카드를 클릭하면 뜨는 갤러리 이미지들
