@@ -864,6 +864,30 @@ h1, h2, h3, h4, h5, h6, p, span, a, label {
   font-size: 0.78rem;
 }
 
+.daesang-privacy-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 4px 0 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.daesang-privacy-check input[type="checkbox"] {
+  margin-top: 2px;
+  width: 15px;
+  height: 15px;
+  accent-color: var(--dh-navy);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.daesang-privacy-check span {
+  font-size: 0.78rem;
+  color: var(--dh-text-muted, #666);
+  line-height: 1.45;
+}
+
 .daesang-contact-form {
   display: flex;
   flex-direction: column;

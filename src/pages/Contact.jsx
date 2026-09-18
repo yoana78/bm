@@ -28,7 +28,8 @@ export default function Contact() {
     country: '',
     category: 'export', // export, domestic, other
     brand: brands[0]?.id || '',
-    message: ''
+    message: '',
+    privacyAgreed: true
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,12 +37,17 @@ export default function Contact() {
 
   // 폼 입력 필드가 바뀔 때마다 상태 업데이트
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, type, value, checked } = e.target;
+    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
   };
 
   // 폼 제출 시 실행 - Web3Forms API로 문의 내용을 전송해 방문자가 메일 앱을 열지 않고도 바로 접수되게 함
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.privacyAgreed) {
+      alert(isEn ? 'Please agree to the collection and use of your personal information.' : '개인정보 수집 및 이용에 동의해 주세요.');
+      return;
+    }
     const typeLabel = formData.category === 'export'
       ? (isEn ? 'Global Export' : '해외수출')
       : formData.category === 'domestic'
@@ -76,7 +82,7 @@ export default function Contact() {
       alert(isEn
         ? '[' + typeLabel + '] Thank you. Our B2B sales team will contact you shortly.'
         : `[${typeLabel}] 문의가 접수되었습니다. 담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.`);
-      setFormData({ company: '', name: '', email: '', phone: '', country: '', category: 'export', brand: brands[0]?.id || '', message: '' });
+      setFormData({ company: '', name: '', email: '', phone: '', country: '', category: 'export', brand: brands[0]?.id || '', message: '', privacyAgreed: true });
     } catch (err) {
       alert(isEn
         ? 'Failed to send your inquiry. Please try again or contact us directly by phone/email.'
@@ -251,6 +257,21 @@ export default function Contact() {
                   <label>{isEn ? 'Inquiry Details *' : '상세 문의 내용 *'}</label>
                   <textarea name="message" rows="5" required value={formData.message} onChange={handleChange} placeholder={isEn ? "Please describe your business inquiry..." : "희망 품목, 희망 수량, 예상 공급 시기 등을 자유롭게 적어주세요."}></textarea>
                 </div>
+
+                {/* 개인정보 수집 및 이용 동의 (필수) */}
+                <label className="daesang-privacy-check">
+                  <input
+                    type="checkbox"
+                    name="privacyAgreed"
+                    checked={formData.privacyAgreed}
+                    onChange={handleChange}
+                  />
+                  <span>
+                    {isEn
+                      ? 'I agree to the collection and use of my personal information. (required)'
+                      : '개인정보 수집 및 이용에 동의합니다. (필수)'}
+                  </span>
+                </label>
 
                 <button type="submit" className="daesang-form-submit" disabled={submitting} style={submitting ? { opacity: 0.6, cursor: 'not-allowed' } : undefined}>
                   {submitting ? (isEn ? 'Sending...' : '전송 중...') : (isEn ? 'SUBMIT INQUIRY' : '문의 접수하기')} →
